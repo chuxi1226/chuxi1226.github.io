@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="bind方法的定义是：12bind()方法创建一个新的函数, 当被调用时，将其this关键字设置为提供的值，在调用新函数时，在任何提供之前提供一个给定的参数序列。 简单来说，bind方法会给一个函数指定this，然后返回一个新的函数，这个函数和原函数在传递参数和返回值上没有区别。举个栗子：1234567891011121314var a = 1;   var obj = &amp;#123;  	  a:">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript再出发：模拟bind的实现">
+<meta property="og:url" content="http://yoursite.com/2017/11/05/javascript再出发：模拟bind的实现/index.html">
+<meta property="og:site_name" content="浮生若梦">
+<meta property="og:description" content="bind方法的定义是：12bind()方法创建一个新的函数, 当被调用时，将其this关键字设置为提供的值，在调用新函数时，在任何提供之前提供一个给定的参数序列。 简单来说，bind方法会给一个函数指定this，然后返回一个新的函数，这个函数和原函数在传递参数和返回值上没有区别。举个栗子：1234567891011121314var a = 1;   var obj = &amp;#123;  	  a:">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-22T16:03:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javascript再出发：模拟bind的实现">
+<meta name="twitter:description" content="bind方法的定义是：12bind()方法创建一个新的函数, 当被调用时，将其this关键字设置为提供的值，在调用新函数时，在任何提供之前提供一个给定的参数序列。 简单来说，bind方法会给一个函数指定this，然后返回一个新的函数，这个函数和原函数在传递参数和返回值上没有区别。举个栗子：1234567891011121314var a = 1;   var obj = &amp;#123;  	  a:">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/05/javascript再出发：模拟bind的实现/"/>
+
+
+
+
+
+  <title>javascript再出发：模拟bind的实现 | 浮生若梦</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/chuxi1226"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub"></a>
+  
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">浮生若梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">楚熙的个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-futbol-o"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/05/javascript再出发：模拟bind的实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cyp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浮生若梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">javascript再出发：模拟bind的实现</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T23:47:00+08:00">
+                2017-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>bind方法的定义是：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bind()方法创建一个新的函数, 当被调用时，将其<span class="keyword">this</span>关键字设置为提供的值，</span><br><span class="line">在调用新函数时，在任何提供之前提供一个给定的参数序列。</span><br></pre></td></tr></table></figure></p>
+<p>简单来说，bind方法会给一个函数指定this，然后返回一个新的函数，这个函数和原函数在传递参数和返回值上没有区别。举个栗子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">var</span> obj = &#123;</span><br><span class="line">  	  a: <span class="number">2</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">  	   <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">      	   name: name,</span><br><span class="line">          age: age</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">  <span class="keyword">var</span> fun1 = fun.bind(obj);</span><br><span class="line">  <span class="keyword">var</span> result = fun1(<span class="string">"zhangsan"</span>,<span class="number">18</span>); <span class="comment">//打印2，返回&#123;name:"zhangsan",age:18&#125;</span></span><br><span class="line">  <span class="built_in">console</span>.log(result);  <span class="comment">//打印&#123;name:"zhangsan",age:18&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>总结一下：</p>
+<ul>
+<li>返回一个新的函数</li>
+<li>this指向bind的第一个参数</li>
+<li>新函数其他的参数照常传递</li>
+<li>新函数能有返回值</li>
+<li>下面我们就根据上面的特点，一步一步来模拟实现bind</li>
+</ul>
+<p>下面我们就根据上面的特点，一步一步来模拟实现bind。还是以上面的函数fun和对象obj为例：</p>
+<h2 id="第一版"><a href="#第一版" class="headerlink" title="第一版"></a>第一版</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.myBind=<span class="function"><span class="keyword">function</span>(<span class="params">context</span>)</span>&#123;</span><br><span class="line">   	<span class="comment">//首先获取函数fun,这里是this，也就是调用myBind的函数</span></span><br><span class="line">       <span class="keyword">var</span> self = <span class="keyword">this</span>;   <span class="comment">//先把this保存起来，防止改变</span></span><br><span class="line">       <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       	self.apply(context);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>测试一下:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fun1 = fun.myBind(obj);</span><br><span class="line">fun1();   <span class="comment">//打印2</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="第二版"><a href="#第二版" class="headerlink" title="第二版"></a>第二版</h2><p>再来解决传参数和返回值的问题，参数是不固定的，但是我们有arguments对象，对  <figure class="highlight plain"><figcaption><span>对象不熟悉的可以另外查资料学习，这里就不展开啦，当然我后续会写关于arguments的文章。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">```javascript</span><br><span class="line">	Function.prototype.myBind = function (context) &#123;</span><br><span class="line">        var self = this;</span><br><span class="line">        return function () &#123;</span><br><span class="line">           return self.apply(context, arguments)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>调用试试：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fun1 = fun.myBind(obj);</span><br><span class="line"><span class="keyword">var</span> result = fun1(<span class="string">"zhangsan"</span>,<span class="number">18</span>)  <span class="comment">//打印2，返回&#123;name:"zhangsan",age:18&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(result);  <span class="comment">//打印&#123;name:"zhangsan",age:18&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>到这里，我们已经实现了上面总结的四个特点，感觉已经可以收工了。但是bind函数还有几个特别不常用的用法，简直是令人发指。看代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">var</span> obj = &#123;</span><br><span class="line">  	a: <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">  	<span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">      	name: name,</span><br><span class="line">          age: age</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> fun1 = fun.bind(obj,<span class="string">"zhangsan"</span>);</span><br><span class="line">  <span class="keyword">var</span> result = fun1(<span class="number">18</span>); <span class="comment">//打印2，返回&#123;name:"zhangsan",age:18&#125;</span></span><br><span class="line">  <span class="built_in">console</span>.log(result);  <span class="comment">//打印&#123;name:"zhangsan",age:18&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>what？对，你没看错，函数在调用bind方法的时候，除了传一个参数指定this，还可以传另外的参数，而且这些参数还可以不传完，剩下的等到调用返回的新函数时再传。这就尴尬了，我们来分析一下，怎样可以把参数存起来。我们在第一二版代码中都是在调用myBind函数的时候返回了一个新的函数，而且这个新的函数还访问了myBind中的变量self，这是一个很明显的闭包。变量self并不会被垃圾回收，我们可以利用闭包的这个特性，再在myBind中声明一个变量保存调用myBind时传递的参数，然后等调用新函数时，把新传入的参数和这个暂存的参数合并。来看代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span> (<span class="params">context</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">      <span class="comment">//第一个参数用来指定this，这里要获取的是除了第一个参数之外的所有参数,利用slice方法截取arguments对象，从第二个参数开始截取</span></span><br><span class="line">      <span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>,<span class="number">1</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      	<span class="comment">//调用返回的方法时会传入新的参数，这时候需要把新传入的参数和上面的args合并，利用数组的concat方法,需要先把arguments对象转化成数组</span></span><br><span class="line">         <span class="keyword">var</span> newArgs=<span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>);</span><br><span class="line">         <span class="keyword">return</span> self.apply(context, newArgs.concat(args))</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试一下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fun1 = fun.myBind(obj,<span class="string">"zhangsan"</span>);</span><br><span class="line"><span class="keyword">var</span> result = fun1(<span class="number">18</span>); <span class="comment">//打印2，返回&#123;name:"zhangsan",age:18&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(result);  <span class="comment">//打印&#123;name:"zhangsan",age:18&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>搞定！上面我们在把arguments转化成数组时也可以使用ES6的…</p>
+<h2 id="当作构造函数使用"><a href="#当作构造函数使用" class="headerlink" title="当作构造函数使用"></a>当作构造函数使用</h2><p>大家以为这样就完了？太天真了，bind函数还有个不推荐的用法，虽然不推荐，但是还是可以用，来看代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">var</span> obj = &#123;</span><br><span class="line">       a: <span class="number">2</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">       <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</span><br><span class="line">       <span class="built_in">console</span>.log(name);</span><br><span class="line">       <span class="built_in">console</span>.log(age);</span><br><span class="line">   &#125;</span><br><span class="line">   fun.prototype.a = <span class="number">3</span>;</span><br><span class="line">   <span class="keyword">var</span> fun1 = fun.bind(obj);</span><br><span class="line">   <span class="keyword">var</span> result = <span class="keyword">new</span> fun1(<span class="string">"zhangsan"</span>, <span class="number">18</span>);  <span class="comment">//打印3,zhangsan,18</span></span><br><span class="line">   <span class="built_in">console</span>.log(result)   <span class="comment">//打印&#123;&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>上面的代码，fun1是fun调用bind函数之后返回的新函数，这时候fun1中的this应该指向obj，但是我们把fun1当作构造函数调用。当函数被当作构造函数调用时，函数内部的this应该指向实例对象。这里同时有两个规则应用于this，一个是通过bind指定的obj，一个是通过构造函数调用指定的实例对象，那么最终this究竟指向什么，大家看结果最终打印的是3，很明显获胜的是后者。这时候通过bind指定的this被覆盖了，这种情况很少见，也不推荐使用，这里我们就不分析了，直接贴出代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">	<span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span> (<span class="params">context</span>) </span>&#123;</span><br><span class="line">    	<span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    	<span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    	<span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        	<span class="keyword">var</span> newArgs = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>);</span><br><span class="line">        	<span class="keyword">return</span> self.apply(<span class="keyword">this</span> <span class="keyword">instanceof</span> F ? <span class="keyword">this</span> : context, args.concat(newArgs));</span><br><span class="line">    &#125;</span><br><span class="line">    F.prototype = <span class="keyword">this</span>.prototype;</span><br><span class="line">    <span class="keyword">return</span> F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/29/javascript再出发：模拟call和apply的实现/" rel="next" title="javascript再出发：模拟call和apply的实现">
+                <i class="fa fa-chevron-left"></i> javascript再出发：模拟call和apply的实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/11/11/avascript再出发：模拟new的实现/" rel="prev" title="javascript再出发：模拟new的实现">
+                javascript再出发：模拟new的实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cyp</p>
+              <p class="site-description motion-element" itemprop="description">记录关于自己的生活，工作，爱好</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#第一版"><span class="nav-number">1.</span> <span class="nav-text">第一版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第二版"><span class="nav-number">2.</span> <span class="nav-text">第二版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#当作构造函数使用"><span class="nav-number">3.</span> <span class="nav-text">当作构造函数使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cyp</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

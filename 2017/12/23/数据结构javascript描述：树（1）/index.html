@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="数据结构," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="树是一种分层结构的抽象模型，树通常用来存储需要快速查找的数据。在我们现实生活中，树形结构有很多，比如公司的组织架构图、家谱等。 树结构和之前的链表，集合相比要复杂很多，为了避免篇幅过长，我决定分几篇文章来介绍树以及它的常用方法。 树的相关概念 上图就是一个树结构，下面我们对照图来介绍几个树相关的概念根节点：在树中，每个元素都被称为节点，树顶部的节点被称为根节点。也就是图中15对应的节点   父节点">
+<meta name="keywords" content="数据结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构javascript描述：树（1）">
+<meta property="og:url" content="http://yoursite.com/2017/12/23/数据结构javascript描述：树（1）/index.html">
+<meta property="og:site_name" content="浮生若梦">
+<meta property="og:description" content="树是一种分层结构的抽象模型，树通常用来存储需要快速查找的数据。在我们现实生活中，树形结构有很多，比如公司的组织架构图、家谱等。 树结构和之前的链表，集合相比要复杂很多，为了避免篇幅过长，我决定分几篇文章来介绍树以及它的常用方法。 树的相关概念 上图就是一个树结构，下面我们对照图来介绍几个树相关的概念根节点：在树中，每个元素都被称为节点，树顶部的节点被称为根节点。也就是图中15对应的节点   父节点">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/Tree/binarySearchTree.png">
+<meta property="og:updated_time" content="2018-04-12T15:52:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构javascript描述：树（1）">
+<meta name="twitter:description" content="树是一种分层结构的抽象模型，树通常用来存储需要快速查找的数据。在我们现实生活中，树形结构有很多，比如公司的组织架构图、家谱等。 树结构和之前的链表，集合相比要复杂很多，为了避免篇幅过长，我决定分几篇文章来介绍树以及它的常用方法。 树的相关概念 上图就是一个树结构，下面我们对照图来介绍几个树相关的概念根节点：在树中，每个元素都被称为节点，树顶部的节点被称为根节点。也就是图中15对应的节点   父节点">
+<meta name="twitter:image" content="http://yoursite.com/images/Tree/binarySearchTree.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/12/23/数据结构javascript描述：树（1）/"/>
+
+
+
+
+
+  <title>数据结构javascript描述：树（1） | 浮生若梦</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/chuxi1226"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub"></a>
+  
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">浮生若梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">楚熙的个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-futbol-o"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/23/数据结构javascript描述：树（1）/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cyp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浮生若梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">数据结构javascript描述：树（1）</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-23T23:22:00+08:00">
+                2017-12-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>树是一种分层结构的抽象模型，树通常用来存储需要快速查找的数据。在我们现实生活中，树形结构有很多，比如公司的组织架构图、家谱等。 树结构和之前的链表，集合相比要复杂很多，为了避免篇幅过长，我决定分几篇文章来介绍树以及它的常用方法。</p>
+<h3 id="树的相关概念"><a href="#树的相关概念" class="headerlink" title="树的相关概念"></a>树的相关概念</h3><p><img src="/images/Tree/binarySearchTree.png" alt="借的百度的图"></p>
+<p>上图就是一个树结构，下面我们对照图来介绍几个树相关的概念<br>根节点：在树中，每个元素都被称为节点，树顶部的节点被称为根节点。也就是图中15对应的节点  </p>
+<p>父节点和子节点：这两个概念用于描述节点之间的关系，图中上下层通过线链接起来的节点具有父子关系，上层的被称为父节点，下层的被称为子节点。比如图中的6，7对应的两个节点，6是7的父节点，7是6的子节点。当然与之对应的还有爷爷节点和孙子节点，这个就不介绍了。关于子节点还有一点说明，图中的6有两个子节点，分别是3和7，这个两个子节点的称呼也不同，左侧的3被称为左侧子节点，右侧的7被称为右侧子节点。  </p>
+<p>叶节点：一般树中的节点都存在父节点和子节点，但是有些节点比较特殊，比如根节点没有父节点，还有一种节点没有子节点，这种节点被称为叶节点（可以类比树的叶子），也被称为外部节点。  </p>
+<p>深度：这个概念是对于节点而言的，深度是指一个节点的祖先节点的数量，也就是说从该节点到根节点隔了多少代。比如图中的节点13，它有父节点7，节点7有父节点6，6有父节点15，15是根节点，不存在父节点，所以这里节点13的深度是3。  </p>
+<p>子树：子树是由节点和后代构成的，类似上篇文章集合中的子集，这里的子树和原本的树也是一种包含关系。比如图中3，2，4三个节点也可以构成树，这个树就是一个子树，是整体的一部分。  </p>
+<p>高度：树的高度取决于所有节点深度的最大值。对照图可以很直观的看到，节点9处在树的最底端，它的深度是4，所以树的高度是4。  </p>
+<h3 id="二叉树和二叉搜索树"><a href="#二叉树和二叉搜索树" class="headerlink" title="二叉树和二叉搜索树"></a>二叉树和二叉搜索树</h3><p>理论上一个节点可以有0到正无穷个子节点，但是这种不规则的树研究意义不大。在计算机科学中我们研究和应用的树最多只有两个子节点，这种树被称为二叉树。二叉搜索树（也被称为二叉查找树）是二叉树的一种，它的特点是：左侧子节点的值小于父节点，右侧子节点的值大于或等于父节点。上图中的树就是一个典型的二叉搜索树，我们也只模拟实现二叉搜索树。<br>再次观察上图，我们来总结一下二叉搜索树的特点：</p>
+<ol>
+<li>任意节点的左子树不空，则左子树上所有结点的值均小于它的根结点的值；</li>
+<li>任意节点的右子树不空，则右子树上所有结点的值均大于它的根结点的值；</li>
+<li>任意节点的左、右子树也分别为二叉查找树；</li>
+<li>没有相等的节点。</li>
+</ol>
+<p>下面我们先用代码模拟一下树的基本结构：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">BinarySearchTree</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> Node = <span class="function"><span class="keyword">function</span> (<span class="params">key</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.key = key;</span><br><span class="line">        <span class="keyword">this</span>.left = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.right = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> root = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个代码和我们之前的链表很相似。在链表中，除了存储值本身，还需要存储指向上一个节点和下一个节点的指针，同时还会给出变量表示链表的表头和表尾。在上面的代码中，声明了节点的构造函数Node，代码很好理解，存储值本身的key，存储左侧子节点的left和存储右侧子节点的right。root用于存储树的根节点。<br>本片文章到这里就结束了，下篇文章我们再来实现树相关的方法。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据结构/" rel="tag"># 数据结构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/16/数据结构javascript描述：集合-ES5版/" rel="next" title="数据结构javascript描述：集合 ">
+                <i class="fa fa-chevron-left"></i> 数据结构javascript描述：集合 
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/07/javascript内存空间/" rel="prev" title="javascript内存空间">
+                javascript内存空间 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cyp</p>
+              <p class="site-description motion-element" itemprop="description">记录关于自己的生活，工作，爱好</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#树的相关概念"><span class="nav-number">1.</span> <span class="nav-text">树的相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二叉树和二叉搜索树"><span class="nav-number">2.</span> <span class="nav-text">二叉树和二叉搜索树</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cyp</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="在上一篇文章中，我们知道了当javascript引擎遇到可执行代码当时候，一个新的执行上下文就会被创建。一个执行上下文的生命周期可以分为两个阶段。创建阶段：创建阶段中，执行上下文会创建变量对象，建立作用域链，确定this的指向。执行阶段：在代码执行阶段中，会完成变量的赋值，函数的引用，执行代码。 变量对象（Variable Object）变量对象中存储了在上下文中定义的变量和函数声明。对于全局上下">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javaScript再出发：变量对象">
+<meta property="og:url" content="http://yoursite.com/2017/10/15/javaScript再出发：变量对象/index.html">
+<meta property="og:site_name" content="浮生若梦">
+<meta property="og:description" content="在上一篇文章中，我们知道了当javascript引擎遇到可执行代码当时候，一个新的执行上下文就会被创建。一个执行上下文的生命周期可以分为两个阶段。创建阶段：创建阶段中，执行上下文会创建变量对象，建立作用域链，确定this的指向。执行阶段：在代码执行阶段中，会完成变量的赋值，函数的引用，执行代码。 变量对象（Variable Object）变量对象中存储了在上下文中定义的变量和函数声明。对于全局上下">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/javascript-run-again4/1.png">
+<meta property="og:updated_time" content="2018-03-22T15:40:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javaScript再出发：变量对象">
+<meta name="twitter:description" content="在上一篇文章中，我们知道了当javascript引擎遇到可执行代码当时候，一个新的执行上下文就会被创建。一个执行上下文的生命周期可以分为两个阶段。创建阶段：创建阶段中，执行上下文会创建变量对象，建立作用域链，确定this的指向。执行阶段：在代码执行阶段中，会完成变量的赋值，函数的引用，执行代码。 变量对象（Variable Object）变量对象中存储了在上下文中定义的变量和函数声明。对于全局上下">
+<meta name="twitter:image" content="http://yoursite.com/images/javascript-run-again4/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/15/javaScript再出发：变量对象/"/>
+
+
+
+
+
+  <title>javaScript再出发：变量对象 | 浮生若梦</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/chuxi1226"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub"></a>
+  
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">浮生若梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">楚熙的个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-futbol-o"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/15/javaScript再出发：变量对象/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cyp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浮生若梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">javaScript再出发：变量对象</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-15T10:49:00+08:00">
+                2017-10-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>在上一篇文章中，我们知道了当javascript引擎遇到可执行代码当时候，一个新的执行上下文就会被创建。一个执行上下文的生命周期可以分为两个阶段。<br>创建阶段：创建阶段中，执行上下文会创建变量对象，建立作用域链，确定this的指向。<br>执行阶段：在代码执行阶段中，会完成变量的赋值，函数的引用，执行代码。<br><img src="/images/javascript-run-again4/1.png" alt=""></p>
+<h3 id="变量对象（Variable-Object）"><a href="#变量对象（Variable-Object）" class="headerlink" title="变量对象（Variable Object）"></a>变量对象（Variable Object）</h3><p>变量对象中存储了在上下文中定义的变量和函数声明。<br>对于全局上下文，变量对象就是全局对象，也就是javascript中的window对象。关于window对象就不多介绍了，很多同学都掌握的比较清楚。<br><br>对于函数上下文，变量对象的创建可以分为以下几步：<br></p>
+<ol>
+<li>建立arguments对象，其中保存着实参和length属性（实参的个数）。检查函数的形参，形参作为变量对象的属性，实参作为对应的属性值，如果没有对应的实参，则属性值为undefined</li>
+<li>检查当前上下文的函数声明。函数名作为变量对象的一个属性，函数对象作为对应的属性值。如果已经存在相同的属性名，则替换掉该属性值。</li>
+<li>检查当前上下文的变量声明。变量名作为变量对象的一个属性，undefined作为对应的属性值。如果已经存在相同的属性名，则跳过。</li>
+</ol>
+<p>这里需要注意的点是，当有同名的函数时会进行替换，有同名的变量时会直接跳过,这样做是为了防止变量把同名的函数覆盖成undefined。来看个例子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">   	<span class="built_in">console</span>.log(fun);    <span class="comment">//fun1()&#123;console.log(a)&#125;</span></span><br><span class="line">   	<span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">       <span class="keyword">var</span> fun = a;</span><br><span class="line">   	<span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   		<span class="built_in">console</span>.log(a);</span><br><span class="line">   	&#125;</span><br><span class="line">   	<span class="built_in">console</span>.log(fun);   <span class="comment">//3</span></span><br><span class="line">   &#125;</span><br><span class="line">   foo(<span class="number">2</span>);</span><br></pre></td></tr></table></figure></p>
+<p>全局上下文就不分析了，我们直接看函数foo中的变量对象，假设变量对象<br><figure class="highlight plain"><figcaption><span>VO </span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">1.建立arguments对象，其中保存着实参和length属性（实参的个数）。检查函数的形 参，形参作为变量对象的属性，实参作为对应的属性值，如果没有对应的实参，则属性值为 undefined</span><br><span class="line"></span><br><span class="line">```javascript</span><br><span class="line">VO=&#123;</span><br><span class="line">	arguments:&#123;</span><br><span class="line">       0:2，</span><br><span class="line">       length:1</span><br><span class="line">    &#125;,</span><br><span class="line">    a:2,</span><br><span class="line">    b:undefined</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>第一步中，函数有两个形参，一个实参，所以变量对象是上面的样子。<br><br>2.检查当前上下文的函数声明。函数名作为变量对象的一个属性，函数对象作为对应的属性值。如果已经存在相同的属性名，则替换掉该属性值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">VO=&#123;</span><br><span class="line">	<span class="built_in">arguments</span>:&#123;</span><br><span class="line">       <span class="number">0</span>:<span class="number">2</span>，</span><br><span class="line">       length:<span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    a:<span class="number">2</span>,</span><br><span class="line">    b:<span class="literal">undefined</span>,</span><br><span class="line">    fun:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(a)&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第二步中，当前上下文中声明了一个函数fun，于是新增一个属性，名称是fun，值是对应的函数引用 <br><br>3.检查当前上下文的变量声明。变量名作为变量对象的一个属性，undefined作为对应的属性值。如果已经存在相同的属性名，则跳过。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">VO=&#123;</span><br><span class="line">	<span class="built_in">arguments</span>:&#123;</span><br><span class="line">       <span class="number">0</span>:<span class="number">2</span>，</span><br><span class="line">       length:<span class="number">1</span></span><br><span class="line">    &#125;,</span><br><span class="line">    a:<span class="number">2</span>,</span><br><span class="line">    b:<span class="literal">undefined</span>,</span><br><span class="line">    fun:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;<span class="built_in">console</span>.log(a)&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第三步中，首先声明了一个变量a，但是这时候AO中已经有属性a了，于是跳过。又声明了一个变量fun，同样AO中已经有属性fun了，于是跳过。所以这时候第三步和第二部的AO看起来一样。此时的带代码可以看成下面的样子：<br><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">   	<span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   		<span class="built_in">console</span>.log(a);</span><br><span class="line">   	&#125;</span><br><span class="line">       <span class="keyword">var</span> a;</span><br><span class="line">   	<span class="built_in">console</span>.log(fun);    <span class="comment">//fun1()&#123;console.log(a)&#125;</span></span><br><span class="line">   	a = <span class="number">3</span>;</span><br><span class="line">       fun = a;</span><br><span class="line">   	<span class="built_in">console</span>.log(fun);   <span class="comment">//3</span></span><br><span class="line">   &#125;</span><br><span class="line">   foo(<span class="number">2</span>);</span><br></pre></td></tr></table></figure></p>
+<p>以上都是变量对象的创建阶段，接下来我们看看代码执行阶段，在执行阶段，代码会依次执行。我们继续分析：<br><br>首先是打印<code>console.log(fun)</code>，这时候VO中的的fun是<code>function(){console.log(a)}</code>,所以打印出来的是这个函数。下一句<code>a = 3</code>，这时VO中的a重新赋值为3。下一句<code>fun = a</code>，这时VO中的fun重新赋值为3。注意这个是代码执行阶段，并不像创建阶段那样会跳过。下一句<code>console.log(fun)</code>,这是的fun已经赋值为3了，所以打印出的是3。<br></p>
+<h3 id="活动对象（activation-object）"><a href="#活动对象（activation-object）" class="headerlink" title="活动对象（activation object）"></a>活动对象（activation object）</h3><p>活动对象和变量对象是同一个东西，当代码执行进入到一个执行上下文中时，这个执行上下文中的变量对象就会被激活，这个时候被激活的变量对象就被称为活动对象。只有活动对象上的各种属性才能被访问。<br></p>
+<p>下面我们来对变量对象做一个总结：</p>
+<ol>
+<li>全局上下文的变量对象是全局对象</li>
+<li>函数上下文的变量对象在激活时又叫活动对象</li>
+<li>活动对象中包含arguments，形参，函数声明，变量声明等属性，属性值为初始值</li>
+<li>在代码正式开始执行时，会修改活动对象中的值</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/09/javaScript再出发：执行上下文/" rel="next" title="javaScript再出发：执行上下文">
+                <i class="fa fa-chevron-left"></i> javaScript再出发：执行上下文
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/22/javascript再出发：作用域链/" rel="prev" title="javascript再出发：作用域链">
+                javascript再出发：作用域链 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cyp</p>
+              <p class="site-description motion-element" itemprop="description">记录关于自己的生活，工作，爱好</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量对象（Variable-Object）"><span class="nav-number">1.</span> <span class="nav-text">变量对象（Variable Object）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#活动对象（activation-object）"><span class="nav-number">2.</span> <span class="nav-text">活动对象（activation object）</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cyp</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

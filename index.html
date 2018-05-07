@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -86,7 +86,7 @@
 <meta property="og:url" content="http://yoursite.com/index.html">
 <meta property="og:site_name" content="浮生若梦">
 <meta property="og:description" content="记录关于自己的生活，工作，爱好">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="浮生若梦">
 <meta name="twitter:description" content="记录关于自己的生活，工作，爱好">
@@ -97,7 +97,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Pisces',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -105,7 +105,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -137,7 +137,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -147,7 +147,8 @@
   <div class="container sidebar-position-left 
   page-home">
     <div class="headband"></div>
-
+    <a href="https://github.com/chuxi1226"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub"></a>
+  
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
@@ -186,7 +187,37 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-futbol-o"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
           </a>
         </li>
       
@@ -196,7 +227,7 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            归档
           </a>
         </li>
       
@@ -233,7 +264,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/07/使用github-hexo搭建自己的博客/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/07/javascript内存空间/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cyp">
@@ -252,7 +283,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/07/使用github-hexo搭建自己的博客/" itemprop="url">使用github+hexo搭建自己的博客</a></h1>
+                <a class="post-title-link" href="/2018/05/07/javascript内存空间/" itemprop="url">javascript内存空间</a></h1>
         
 
         <div class="post-meta">
@@ -262,9 +293,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-07T16:58:45+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-07T19:11:01+08:00">
                 2018-05-07
               </time>
             
@@ -304,7 +335,45 @@
       
         
           
-            
+            <p>javaScript内存空间<br>作为一门高级语言，JS并不像C/C++那样拥有对内存的完全掌控。JS中内存的分配和回收都是自动完成的，内存在不使用的时候会被垃圾回收器自动回收。正因如此，许多人认为JS不用太关心内存管理的问题，但如果不了解JS的内存管理机制，我们会非常容易造成内存泄漏（内存无法被回收）的问题。</p>
+<p>内存的生命周期<br>JS环境中分配的内存一般有如下生命周期：</p>
+<p>内存分配：当我们申明变量、函数、对象的时候，系统会自动为他们分配内存</p>
+<p>内存使用：即读写内存，也就是使用变量、函数等</p>
+<p>内存回收：使用完毕，由垃圾回收自动回收不再使用的内存</p>
+<p>1<br>var a = 1;<br>这句简单的代码其实已经包含了内存分配和内存使用两步，首先在内存中为变量a分配一个空间，然后在这个空间里存入一个数字1。至于内存回收，我们后面再做介绍。</p>
+<p>堆内存和栈内存<br>我们来看一道很常见的面试题</p>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>var a=1;<br>var b=a;<br>b=2;<br>console.log(a)；   //1<br>console.log(b);    //2</p>
+<p>var obj1={a:1};<br>var obj2=obj1;<br>obj2.a=2;<br>console.log(a);     //{a:2}<br>console.log(b);     //{a:2}<br>代码的第一部分，b的值改变时，a的值不受影响。第二部分，obj2.a改变时，obj1受到影响，一起改变。这里的a，b和obj1，obj2有什么区别，为什么会有不同的效果。下面先介绍一下内存空间的分类：一种叫做栈（stack），另一种叫做堆（heap）；</p>
+<p>栈中的数据块按照一定次序存放（后进先出），栈结构和羽毛球筒存取羽毛球很相似，大家可以脑补一下。假设羽毛球筒中按循序存放了1，2，3，4，5个球，最底下是1号球，最上面是5好球，很明显1号是最先放入筒中的。现在我想使用羽毛球，最先使用的就应该是5号球，这就是所谓的后进先出。同样，如果我想使用4号球，就必须先取出5号球，然后才能取出4号球。</p>
+<p>堆数据结构存取数据的方式，则与书架与书非常相似。<br>书虽然也整齐的存放在书架上，但是我们只要知道书的名字，我们就可以很方便的取出我们想要的书，而不用像从羽毛球筒里取羽毛球一样，非得将上面的羽毛球拿出来才能取到中间的某一个羽毛球。好比在JSON格式的数据中，我们存储的key-value是可以无序的，因为顺序的不同并不影响我们的使用，我们只需要关心书的名字。</p>
+<p>下面用几句代码和一张图来帮助大家理解内存空间</p>
+<p>var a=1;<br>var b=false;<br>var c={name:”zhangSan”,age:20}<br>var d=[1,2,3,4]</p>
+<p>我们可以看到，变量a，b和变量c，d在内存空间中的存储方式不一样，这种不同的存储方式就造成了他们在进行赋值等操作的时候会有不同的行为，而这和他们的数据类型有关。在javaScript中，数据类型可以分为两种：</p>
+<p>值类型：数值、布尔值、null、undefined。</p>
+<p>引用类型：对象、数组、函数</p>
+<p>对于值类型的变量，数据存储在栈内存中。对于引用类型的变量，数据分两部分存储，一部分是对象的内存地址（指针），存储在栈内存中，一部分是对象真实的数据，存储在堆内存中。</p>
+<p>理解这个之后，我们再来分析一下前面提到的面试题。</p>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>var a=1;<br>var b=a;<br>b=2;<br>console.log(a)；   //1<br>console.log(b);    //2</p>
+<p>var obj1={a:1};<br>var obj2=obj1;<br>obj2.a=2;<br>console.log(obj1);     //{a:2}<br>console.log(obj2);     //{a:2}<br>第一部分，第一句代码，声明一个变量a，然后赋值为1，这一部分相当于在内存中开辟了一个新的空间，取名叫a，然后在这个空间里存储了一个值1。<br>第二句代码，声明一个变量b，然后将a赋值给它。这一部分相当于在内存中新开辟了一个空间，取名叫b，然后在这个空间里放上a的值（把a的值复制一份给b），也就是1。<br>这两句代码完成后，栈内存中多了两个空间，a和b，都存储着1。然后第三句代码把b重新赋值为2，相当于把空间b里的值换了一个，这个时候和a没有关系，a中的值不受影响。</p>
+<p>第二部分，第一句代码，声明一个变量obj1，赋值为一个对象{a:1}。这个时候在内存中开辟了一个新的空间叫做obj1，里面存储着{a:1}在堆内存中的地址，假设是0x234hda。<br>第二句代码，声明一个变量obj2，然后将obj1的值赋给他。这个时候在内存中开辟了一个新的存储空间，取名叫obj2，然后在这个空间里放上obj1的值（把这个地址复制一份给obj2），也就是0x234hda。<br>这两句代码完成之后，obj1和obj2的栈内存中都存储的是0x234hda。然后执行第三句代码obj2.a=2,这时候发生的事情如下：根据obj2的值0x234hda找到堆内存中存储着的{a:1},然后找到属性a，把它修改为2。这个时候obj1和obj2的栈内存中存储的依然是0x234hda，但是这个地址所对应的对象{a:1}已经变成了{a:2}。</p>
+<p>继续执行代码，打印obj1,这个时候根据obj1中存储的0x234hda地址找到那个对象{a:2},打印出来，于是我们就看到了{a:2}。打印obj2,这个时候根据obj2中存储的0x234hda地址找到那个对象{a:2},打印出来，于是我们就看到了{a:2}。</p>
+<p>这就是为什么我们修改了obj1之后，obj2也会受到影响。</p>
+<p>为了帮助大家理解，我再举一个生活化的例子。小明和小华住在一个寝室，有一天小明买了一袋洗衣粉，放在了寝室的东南角。第二天小华想找小明借洗衣粉，小明说洗衣粉在“寝室东南角”，小华根据这个地址找到了洗衣粉，用了一半。第三天，小明去用洗衣粉，根据“寝室东南角”找，这个时候他就发现洗衣粉只剩下一半了。</p>
+<p>以上就是值类型，引用类型以及堆内存，栈内存的概念讲解，如果有不理解的或者有不同见解的同学，欢迎留言讨论。最后我们再说明一下，当内存中的数据使用完毕时，javaScript是如何对他们进行回收的。</p>
+<p>垃圾回收算法<br>对垃圾回收算法来说，核心思想就是如何判断内存已经不再使用了。下面介绍两种常见浏览器的垃圾回收算法。</p>
+<p>引用计数算法<br>引用计数算法定义“内存不再使用”的标准很简单，就是看一个对象是否有指向它的引用。如果没有其他对象指向它了，说明该对象已经不再需了。</p>
+<p>下面来看个例子：</p>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>// 创建一个对象person，他有两个指向属性age和name的引用<br>var person = {<br>    age: 18,<br>    name: ‘zhangSan’<br>};</p>
+<p>person.name = null; // 虽然设置为null，但因为person对象还有指向name的引用，因此name不会回收</p>
+<p>var p = person;<br>person = 1;         //原来的person对象被赋值为1，但因为有新引用p指向原person对象，因此它不会被回收</p>
+<p>p = null;           //原person对象已经没有引用，很快会被回收<br>由上面可以看出，引用计数算法是个简单有效的算法。但它却存在一个致命的问题：循环引用。如果两个对象相互引用，尽管他们已不再使用，垃圾回收器不会进行回收，导致内存泄露。</p>
+<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>function cycle() {<br>    var obj1 = {};<br>    var obj2 = {};<br>    obj1.a = obj2;<br>    obj2.a = obj1;<br>}</p>
+<p>cycle();<br>上面我们申明了一个cycle函数，其中包含两个相互引用的对象。在调用函数结束后，对象o1和o2实际上已离开函数范围，因此不再需要了。但根据引用计数的原则，他们之间的相互引用依然存在，因此这部分内存不会被回收，内存泄露不可避免了。</p>
+<p>正是因为有这个严重的缺点，这个算法在现代浏览器中已经被下面要介绍的标记清除算法所取代了。但绝不可认为该问题已经不再存在了，因为还占有大量市场的IE6、IE7使用的正是这一算法。</p>
+<p>标记清除算法<br>上面说过，现代的浏览器已经不再使用引用计数算法了。现代浏览器通用的大多是基于标记清除算法的某些改进算法，总体思想都是一致的。</p>
+<p>标记清除算法将“不再使用的对象”定义为“无法达到的对象”。简单来说，就是从根部（在JS中就是全局对象）出发定时扫描内存中的对象。凡是能从根部到达的对象，都是还需要使用的。那些无法由根部出发触及到的对象被标记为不再使用，稍后进行回收。</p>
+<p>从这个概念可以看出，无法触及的对象包含了没有引用的对象这个概念（没有任何引用的对象也是无法触及的对象）。但反之未必成立。</p>
+
           
         
       
@@ -352,7 +421,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/07/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/23/数据结构javascript描述：树（1）/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cyp">
@@ -371,7 +440,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/07/hello-world/" itemprop="url">Hello World</a></h1>
+                <a class="post-title-link" href="/2017/12/23/数据结构javascript描述：树（1）/" itemprop="url">数据结构javascript描述：树（1）</a></h1>
         
 
         <div class="post-meta">
@@ -381,10 +450,10 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-07T16:54:49+08:00">
-                2018-05-07
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-23T23:22:00+08:00">
+                2017-12-23
               </time>
             
 
@@ -393,6 +462,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -423,15 +514,1334 @@
       
         
           
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+            <p>树是一种分层结构的抽象模型，树通常用来存储需要快速查找的数据。在我们现实生活中，树形结构有很多，比如公司的组织架构图、家谱等。 树结构和之前的链表，集合相比要复杂很多，为了避免篇幅过长，我决定分几篇文章来介绍树以及它的常用方法。</p>
+<h3 id="树的相关概念"><a href="#树的相关概念" class="headerlink" title="树的相关概念"></a>树的相关概念</h3><p><img src="/images/Tree/binarySearchTree.png" alt="借的百度的图"></p>
+<p>上图就是一个树结构，下面我们对照图来介绍几个树相关的概念<br>根节点：在树中，每个元素都被称为节点，树顶部的节点被称为根节点。也就是图中15对应的节点  </p>
+<p>父节点和子节点：这两个概念用于描述节点之间的关系，图中上下层通过线链接起来的节点具有父子关系，上层的被称为父节点，下层的被称为子节点。比如图中的6，7对应的两个节点，6是7的父节点，7是6的子节点。当然与之对应的还有爷爷节点和孙子节点，这个就不介绍了。关于子节点还有一点说明，图中的6有两个子节点，分别是3和7，这个两个子节点的称呼也不同，左侧的3被称为左侧子节点，右侧的7被称为右侧子节点。  </p>
+<p>叶节点：一般树中的节点都存在父节点和子节点，但是有些节点比较特殊，比如根节点没有父节点，还有一种节点没有子节点，这种节点被称为叶节点（可以类比树的叶子），也被称为外部节点。  </p>
+<p>深度：这个概念是对于节点而言的，深度是指一个节点的祖先节点的数量，也就是说从该节点到根节点隔了多少代。比如图中的节点13，它有父节点7，节点7有父节点6，6有父节点15，15是根节点，不存在父节点，所以这里节点13的深度是3。  </p>
+<p>子树：子树是由节点和后代构成的，类似上篇文章集合中的子集，这里的子树和原本的树也是一种包含关系。比如图中3，2，4三个节点也可以构成树，这个树就是一个子树，是整体的一部分。  </p>
+<p>高度：树的高度取决于所有节点深度的最大值。对照图可以很直观的看到，节点9处在树的最底端，它的深度是4，所以树的高度是4。  </p>
+<h3 id="二叉树和二叉搜索树"><a href="#二叉树和二叉搜索树" class="headerlink" title="二叉树和二叉搜索树"></a>二叉树和二叉搜索树</h3><p>理论上一个节点可以有0到正无穷个子节点，但是这种不规则的树研究意义不大。在计算机科学中我们研究和应用的树最多只有两个子节点，这种树被称为二叉树。二叉搜索树（也被称为二叉查找树）是二叉树的一种，它的特点是：左侧子节点的值小于父节点，右侧子节点的值大于或等于父节点。上图中的树就是一个典型的二叉搜索树，我们也只模拟实现二叉搜索树。<br>再次观察上图，我们来总结一下二叉搜索树的特点：</p>
+<ol>
+<li>任意节点的左子树不空，则左子树上所有结点的值均小于它的根结点的值；</li>
+<li>任意节点的右子树不空，则右子树上所有结点的值均大于它的根结点的值；</li>
+<li>任意节点的左、右子树也分别为二叉查找树；</li>
+<li>没有相等的节点。</li>
+</ol>
+<p>下面我们先用代码模拟一下树的基本结构：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">BinarySearchTree</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> Node = <span class="function"><span class="keyword">function</span> (<span class="params">key</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.key = key;</span><br><span class="line">        <span class="keyword">this</span>.left = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.right = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> root = <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这个代码和我们之前的链表很相似。在链表中，除了存储值本身，还需要存储指向上一个节点和下一个节点的指针，同时还会给出变量表示链表的表头和表尾。在上面的代码中，声明了节点的构造函数Node，代码很好理解，存储值本身的key，存储左侧子节点的left和存储右侧子节点的right。root用于存储树的根节点。<br>本片文章到这里就结束了，下篇文章我们再来实现树相关的方法。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/16/数据结构javascript描述：集合-ES5版/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cyp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浮生若梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/16/数据结构javascript描述：集合-ES5版/" itemprop="url">数据结构javascript描述：集合 </a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-16T00:11:00+08:00">
+                2017-12-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>集合是由一组无序且唯一的项组成的。你可以把集合想像成一个既没有重复元素，也没有顺序的数组。这个数据结构与数学中的有限集合相同。在数学中，集合有交集、并集、差集、子集等概念。<br>在ES6中已经支持Set这一数据结构，但是并没有实现交并这些方法。本篇文章将基于ES5，使用对象的方式来模拟实现Set以及它的常用方法.文章的最后我们会将我们模拟实现的Set和ES6中的Set做一个对比。</p>
+<h3 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h3><p>我们使用对象而不是数组来模拟集合，最主要的一个原因就是对象中的属性名和属性值一一对应，不会出现一个属性名指向两个不同的值，这种唯一性正是集合需要的。在集合中，通常需要以下方法：  </p>
+<ul>
+<li>has(value):  如果集合中包含某个元素，返回true，否则返回false</li>
+<li>add(value):  向集合中添加一个新的元素</li>
+<li>delete(value):  删除集合中的某个元素</li>
+<li>clear():  清空集合</li>
+<li>size(): 返回集合中元素的个数</li>
+<li>values(): 返回一个包含集合中所有值的数组</li>
+</ul>
+<p>下面我们一个一个来实现这些方法，首先给出集合最基本的结构<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Set</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> items = &#123;&#125;;</span><br><span class="line">    <span class="keyword">this</span>.has = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">    <span class="keyword">this</span>.add = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">    <span class="keyword">this</span>.delete = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">    <span class="keyword">this</span>.clear = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">    <span class="keyword">this</span>.size = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">    <span class="keyword">this</span>.values = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="has"><a href="#has" class="headerlink" title="has"></a>has</h4><p>我们往集合中存储值的时候，将items中的属性名和属性值设置成一样的, <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">```javascript</span><br><span class="line">this.has = function (value) &#123;</span><br><span class="line">	return items.hasOwnProperty(value);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="add"><a href="#add" class="headerlink" title="add"></a>add</h4><p>向集合中添加元素，相当于是给items对象添加属性。有一点需要注意，集合中的值不允许重复，所以在添加之前需要检测一下待添加的值是否已存在。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.add = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>.has(value)) &#123;</span><br><span class="line">        items[value] = value;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="delete"><a href="#delete" class="headerlink" title="delete"></a>delete</h4><p>移除集合中的元素，相当于是删除items对象的属性。我们可以借助delete操作符来删除对象的属性。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.delete = <span class="function"><span class="keyword">function</span> (<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.has(value)) &#123;</span><br><span class="line">        <span class="keyword">delete</span> items[value];</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h4><p>清空集合，相当于是清空items对象。我们可以循环delete对象的属性，但这这样实在是太蠢了，我们可以直接将items重新赋值为一个新的空对象。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">this.clear = function () &#123;</span><br><span class="line">	items = &#123;&#125;;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="size"><a href="#size" class="headerlink" title="size"></a>size</h4><p>返回集合中元素的个数，也就是集合中属性的个数。这里我们可以借助Object.key(obj)方法，该方法可以返回对象中属性名组成的数组，然后我们可以使用数组的length属性，返回集合的长度。当然我们也可以使用比较原始的方法，循环计数。这里我们给出两种实现，大家可以对比查看。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//方法一</span></span><br><span class="line"><span class="keyword">this</span>.size = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">Object</span>.keys(items).length;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//方法二</span></span><br><span class="line"><span class="keyword">this</span>.size = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> count = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> items)&#123;</span><br><span class="line">    	<span class="comment">//把原型对象上的属性过滤掉</span></span><br><span class="line">    	<span class="keyword">if</span>(items.hasOwnProperty(key))&#123;</span><br><span class="line">        	count++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="values"><a href="#values" class="headerlink" title="values"></a>values</h4><p>返回集合中值组成的数组，这里我们可以循环取出对象items中的值，添加进一个空数组，最后返回该数组就可以了。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.values = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> arr = [];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>,keys = <span class="built_in">Object</span>.keys(items),key;key=keys[i++];)&#123;</span><br><span class="line">    	arr.push(items[key])</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>考虑到兼容性，我们可以参考size中方法二，使用for···in和hasOwnProperty来循环。这里就不给出代码了，大家可以对照实现。</p>
+<h4 id="测试一下"><a href="#测试一下" class="headerlink" title="测试一下"></a>测试一下</h4><p>集合的常用方法已经实现了，下面我们来测试一下。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> set = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">set.add(<span class="number">1</span>);</span><br><span class="line">set.add(<span class="number">2</span>);</span><br><span class="line"><span class="built_in">console</span>.log(set.values());  <span class="comment">//[1,2]</span></span><br><span class="line"><span class="built_in">console</span>.log(set.has(<span class="number">1</span>));    <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(set.has(<span class="number">2</span>));    <span class="comment">//true</span></span><br><span class="line">set.delete(<span class="number">2</span>); </span><br><span class="line"><span class="built_in">console</span>.log(set.values());  <span class="comment">//[1]</span></span><br><span class="line"><span class="built_in">console</span>.log(set.size());    <span class="comment">//1</span></span><br></pre></td></tr></table></figure></p>
+<p>集合的常用方法没问题了，下面我们来实现数学中集合的交、并等操作。</p>
+<h4 id="交集"><a href="#交集" class="headerlink" title="交集"></a>交集</h4><p>数学中，集合A和集合B的交集表示为： A∩B，含义为：{x|x∈A∧x∈B}。意思是，元素既存在于集合A中，又存在于集合B中。例如{1,2,3}∩{2,3,4}={2,3}。<br>在代码中，我们可以根据这个定义，先创建一个空集合C，然后循环集合A和集合B，如果一个元素在A和B中都存在，我们就把这个元素添加集合C，最后集合C就是我们需要的交集。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.intersection = <span class="function"><span class="keyword">function</span> (<span class="params">setB</span>) </span>&#123;</span><br><span class="line">       <span class="comment">//这里的this就是集合A，参数setB是集合B，我们再创建集合C表示它们的交集</span></span><br><span class="line">       <span class="keyword">let</span> setC = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">       <span class="keyword">let</span> values = <span class="keyword">this</span>.values();</span><br><span class="line">       <span class="comment">//遍历集合A中的元素</span></span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, value; value = values[i++];) &#123;</span><br><span class="line">       	<span class="comment">//如果集合B中也存在该元素，说明该元素属于它们的交集</span></span><br><span class="line">           <span class="keyword">if</span> (setB.has(value)) &#123;</span><br><span class="line">               setC.add(value);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> setC;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试一下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> setA,</span><br><span class="line">setB,</span><br><span class="line">setC;</span><br><span class="line">setA = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">setA.add(<span class="number">1</span>);</span><br><span class="line">setA.add(<span class="number">2</span>);</span><br><span class="line">setB = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">setB.add(<span class="number">1</span>);</span><br><span class="line">setB.add(<span class="number">3</span>);</span><br><span class="line">setC = setA.intersection(setB);</span><br><span class="line"><span class="built_in">console</span>.log(setC.values());  <span class="comment">//[1]</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="并集"><a href="#并集" class="headerlink" title="并集"></a>并集</h4><p>数学中，集合A和集合B的并集表示为： A∪B，含义为：{x|x∈A∨x∈B}。意思是，元素属于A或者元素属于B。例如{1,2,3}∪{2,3,4}={1,2,3,4}。<br>在代码中，我们可以根据这个定义，先创建一个空集合C，然后循环集合A和集合B，将A和B中的元素都添加进集合C。集合的add方法会检测是否有重复值，相当于自动帮我们去除了重复值。最后得到的集合C就是我们需要的并集。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.union = <span class="function"><span class="keyword">function</span> (<span class="params">setB</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">let</span> SetC = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">       <span class="keyword">let</span> values = <span class="keyword">this</span>.values();</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, value; value = values[i++];) &#123;</span><br><span class="line">           SetC.add(value);</span><br><span class="line">       &#125;</span><br><span class="line">       values = setB.values();</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, value; value = values[i++];) &#123;</span><br><span class="line">           SetC.add(value);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> SetC;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试一下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> setA,</span><br><span class="line">setB,</span><br><span class="line">setC;</span><br><span class="line">setA = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">setA.add(<span class="number">1</span>);</span><br><span class="line">setA.add(<span class="number">2</span>);</span><br><span class="line">setB = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">setB.add(<span class="number">1</span>);</span><br><span class="line">setB.add(<span class="number">3</span>);</span><br><span class="line">setC = setA.union(setB);</span><br><span class="line"><span class="built_in">console</span>.log(setC.values());  <span class="comment">//[1,2,3]</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="差集"><a href="#差集" class="headerlink" title="差集"></a>差集</h4><p>数学中，集合A和集合B的差集表示为：A-B或A\B，含义为：{x|x∈A∧x∉B’}。意思是，元素属于A但是不属于B。例如{1,2,3}-{2,3,4}={1}。<br>在代码中，我们可以根据这个定义，先创建一个空集合C，然后循环集合A和集合B，如果一个元素在A中存在但是在B中不存在，我们就把这个元素添加集合C，最后集合C就是我们需要的差集。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.difference = <span class="function"><span class="keyword">function</span> (<span class="params">setB</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">let</span> setC = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">       <span class="keyword">let</span> values = <span class="keyword">this</span>.values();</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, value; value = values[i++];) &#123;</span><br><span class="line">           <span class="keyword">if</span> (!setB.has(value)) &#123;</span><br><span class="line">               setC.add(value);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> setC;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试一下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> setA,</span><br><span class="line">setB,</span><br><span class="line">setC;</span><br><span class="line">setA = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">setA.add(<span class="number">1</span>);</span><br><span class="line">setA.add(<span class="number">2</span>);</span><br><span class="line">setB = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">setB.add(<span class="number">1</span>);</span><br><span class="line">setB.add(<span class="number">3</span>);</span><br><span class="line">setC = setA.difference(setB);</span><br><span class="line"><span class="built_in">console</span>.log(setC.values());  <span class="comment">//[2]</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="子集"><a href="#子集" class="headerlink" title="子集"></a>子集</h4><p>如果集合A中的每一个元素都属于集合B，就说集合A是几个B的子集，计作A⊆B。<br>在代码中，我们只需要遍历集合A和集合B，如果存在某个元素属于集合A，但是不属于集合B，那么就说明A不是B的子集。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.subset = <span class="function"><span class="keyword">function</span> (<span class="params">setB</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">let</span> values = <span class="keyword">this</span>.values();</span><br><span class="line">       <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>, value; value = values[i++];) &#123;</span><br><span class="line">           <span class="keyword">if</span> (!setB.has(value)) &#123;</span><br><span class="line">               <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试一下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> setA,</span><br><span class="line">setB;</span><br><span class="line">setA = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">setA.add(<span class="number">1</span>);</span><br><span class="line">setA.add(<span class="number">2</span>);</span><br><span class="line">setB = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">setB.add(<span class="number">1</span>);</span><br><span class="line">setB.add(<span class="number">2</span>);</span><br><span class="line">setB.add(<span class="number">3</span>);</span><br><span class="line"><span class="built_in">console</span>.log(setA.subset(setB));  <span class="comment">//true</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="ES6中的Set"><a href="#ES6中的Set" class="headerlink" title="ES6中的Set"></a>ES6中的Set</h4><p>ES6中新增了Set类，具体点细节大家可以自行搜索资料，网上已经有很多介绍了。和我们模拟实现的Set不同，ES6中的Set的values方法返回不是值构成的数组，而是迭代器Interator。还有一个区别是，ES6的Set自带有size属性。<br>下面我们使用ES6中的Set来实现集合中的交集并集等操作。</p>
+<h4 id="Set类模拟交集"><a href="#Set类模拟交集" class="headerlink" title="Set类模拟交集"></a>Set类模拟交集</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> intersection = <span class="function"><span class="keyword">function</span> (<span class="params">SetA,SetB</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> setC = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> SetA)&#123;</span><br><span class="line">    	<span class="keyword">if</span>(setB.has(i))&#123;</span><br><span class="line">        	setC.add(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> setC;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Set类模拟并集"><a href="#Set类模拟并集" class="headerlink" title="Set类模拟并集"></a>Set类模拟并集</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> union = <span class="function"><span class="keyword">function</span> (<span class="params">SetA,SetB</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> setC = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> SetA)&#123;</span><br><span class="line">        setC.add(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> SetB)&#123;</span><br><span class="line">        setC.add(i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> setC;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Set类模拟差集"><a href="#Set类模拟差集" class="headerlink" title="Set类模拟差集"></a>Set类模拟差集</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> difference = <span class="function"><span class="keyword">function</span> (<span class="params">SetA,SetB</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">let</span> setC = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i <span class="keyword">of</span> SetA)&#123;</span><br><span class="line">    	<span class="keyword">if</span>(!setB.has(i))&#123;</span><br><span class="line">        	setC.add(i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> setC;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/09/数据结构javascript描述：双链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cyp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浮生若梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/09/数据结构javascript描述：双链表/" itemprop="url">数据结构javascript描述：双向链表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-09T23:37:00+08:00">
+                2017-12-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>上篇文章介绍了单链表，单链表中包含了一个存储元素本身的节点和指向下一个元素的引用。想在链表中查找某个元素，需要从表头开始迭代。这篇文章我们再来介绍一下双向链表。</p>
+<h3 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h3><p>双向链表和单链表的区别在于，单链表中，一个节点只有指向下一个节点的指针，而在双向链表中，指针是双向的：一个指向下一个元素，一个指向前一个元素。双向链表有两种迭代的方法：从头到尾或者反过来从尾到头。我们可以访问某一节点的下一个或者前一个元素。在单链表中，如果迭代时错过了要找的元素，就需要回到表头，重新开始迭代。这也是双向链表优于单链表的地方。<br>双向链表中需要实现的方法和单链表中的类似，实现的思路也很类似。这里我们实现两个方法：</p>
+<ul>
+<li>insert 向指定的位置插入元素</li>
+<li>removeAt 从指定位置移除元素  </li>
+</ul>
+<p>其余的方法大家可以参照实现，思路一样。<br>首先来完成双向链表的构造函数：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DoublyLinkedList</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Node</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">    	<span class="keyword">this</span>.element = element;</span><br><span class="line">        <span class="keyword">this</span>.next = <span class="literal">null</span>;</span><br><span class="line">        <span class="keyword">this</span>.pre = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">let</span> length = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> head = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">let</span> tail = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.insert = <span class="function"><span class="keyword">function</span>(<span class="params">position,element</span>)</span>&#123;&#125;</span><br><span class="line">    <span class="keyword">this</span>.removeAt = <span class="function"><span class="keyword">function</span>(<span class="params">position</span>)</span>&#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>对照单链表的够赞函数实现，这里有两处不同：一是节点构造函数中多了 <code>this.pre = null</code> ，二是多了 <code>let tail = null;</code> 这些变化也很好理解，双向链表相比于单项链表多出了对前一项的引用，同时也支持从尾到头的迭代。<br>下面我们来实现insert和removeAt方法。  </p>
+<h4 id="insert"><a href="#insert" class="headerlink" title="insert"></a>insert</h4><p>向链表的指定位置插入元素。参照单链表中的insert实现，思路如下：迭代寻找到指定位置对应的元素currentNode和前一项元素previousNode。添加的方式是将前一项previousNode和新创建的元素node链接，然后新创建的元素node和currentNode链接，这样就可以实现添加。和单链表不同的是，单链表只需指定next即可，而双向链表需要指定next和pre才算完全的添加成功。和单链表一样，插入元素时也有特殊的情况。第一种特殊情况是当指定的位置为0时，在表头前插入。这时候只需将新元素node的next指向原表头head，原表头的pre指向node，同时node作为作为新的表头。第二种特殊情况是链表为空时，这种情况下插入的元素是链表的第一个元素，既是head又是tail。第三种特殊情况是指定位置position等于链表长度length，这种情况相当于向链表的尾巴tail后面插入元素，需要将原tail.next指向新元素node，node的pre指向原尾巴，同时node作为链表新的tail。<br>说了这么多，来看代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.insert = <span class="function"><span class="keyword">function</span> (<span class="params">position, element</span>) </span>&#123;</span><br><span class="line">   	<span class="comment">//先检测指定的位置是否符合规则</span></span><br><span class="line">       <span class="keyword">if</span> (position &lt; <span class="number">0</span> || position &gt; length) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"索引超出范围"</span>);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       	<span class="comment">//创建新的元素</span></span><br><span class="line">           <span class="keyword">let</span> node = <span class="keyword">new</span> Node(element);</span><br><span class="line">           <span class="comment">//当前元素初始化为表头，准备迭代</span></span><br><span class="line">           <span class="keyword">let</span> currentNode = head;</span><br><span class="line">           <span class="comment">//当前元素的索引，表头索引为0</span></span><br><span class="line">           <span class="keyword">let</span> index = <span class="number">0</span>,</span><br><span class="line">           <span class="comment">//当前元素的前一项</span></span><br><span class="line">           previousNode;</span><br><span class="line">           </span><br><span class="line">           <span class="comment">//当向表头前插入元素时</span></span><br><span class="line">           <span class="keyword">if</span> (position === <span class="number">0</span>) &#123;</span><br><span class="line">               <span class="comment">//首先检测链表是不是空的</span></span><br><span class="line">               <span class="keyword">if</span> (!head) &#123;</span><br><span class="line">               	<span class="comment">//如果链表是空的，新插入的元素既是表头又是表尾</span></span><br><span class="line">                   head = node;</span><br><span class="line">                   tail = node;</span><br><span class="line">               &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               	<span class="comment">//如果链表不是空的，在表头前添加元素</span></span><br><span class="line">                   node.next = currentNode;</span><br><span class="line">                   <span class="comment">//需要同时指定next和pre才算绑定完成</span></span><br><span class="line">                   currentNode.pre = node;</span><br><span class="line">                   <span class="comment">//新的元素成为新的表头</span></span><br><span class="line">                   head = node;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125; <span class="keyword">else</span> <span class="keyword">if</span> (position === length) &#123;</span><br><span class="line">               <span class="comment">//向链表的尾巴后面添加元素时</span></span><br><span class="line">               currentNode = node;</span><br><span class="line">               currentNode.next = node;</span><br><span class="line">               node.pre = currentNode;</span><br><span class="line">               <span class="comment">//当前元素成为新的表尾</span></span><br><span class="line">               tail = node;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="comment">//向中间某处添加元素时，从表头开始迭代，找到position对应的元素</span></span><br><span class="line">               <span class="keyword">while</span> (index++ &lt; position) &#123;</span><br><span class="line">                   previousNode = currentNode;</span><br><span class="line">                   currentNode = currentNode.next;</span><br><span class="line">               &#125;</span><br><span class="line">               //循环结束时，currentNode代表positon对应的元素，previousNode代表前一项元素</span><br><span class="line">               //向previousNode和currentNode中间插入元素</span><br><span class="line">               previousNode.next = node;</span><br><span class="line">               node.pre = previousNode;</span><br><span class="line">               node.next = currentNode;</span><br><span class="line">               currentNode.pre = node;</span><br><span class="line">           &#125;</span><br><span class="line">           //添加完成时，length加1</span><br><span class="line">           length++;</span><br><span class="line">           return true;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码有详细的注释说明，大家可以仔细对照查看，帮助理解。如果还有不懂的，欢迎留言讨论。</p>
+<h4 id="removeAt"><a href="#removeAt" class="headerlink" title="removeAt"></a>removeAt</h4><p>从指定位置删除元素，思路和insert思路类似。从表头开始迭代，找到指定位置对应的元素currentNode，它的前一项previousNode，它的后一项nextNode。删除的方法和单链表类似，将前一项previousNode和后一项nextNode链接起来，跳过currentNode就相当于移除了当前元素。也有特殊情况，第一种是position等于0，这时移除的是表头，需要将原表头的下一项作为新的表头。第二中是position等于链表长度length，这时移除的是表尾，需要将原表尾的前一项作为新的表尾。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.removeAt = <span class="function"><span class="keyword">function</span> (<span class="params">position</span>) </span>&#123;</span><br><span class="line">   	<span class="comment">//先检测指定的位置是否符合规则</span></span><br><span class="line">       <span class="keyword">if</span> (position &lt; <span class="number">0</span> || position &gt;= length) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"索引超出范围"</span>);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">       	<span class="comment">//初始化当前项为head，准备迭代</span></span><br><span class="line">           <span class="keyword">let</span> currentNode = head;</span><br><span class="line">           <span class="comment">//当前项的索引，head对应的索引为0</span></span><br><span class="line">           <span class="keyword">let</span> index = <span class="number">0</span>,</span><br><span class="line">           previousNode;</span><br><span class="line">           <span class="comment">//当删除的是表头时</span></span><br><span class="line">           <span class="keyword">if</span> (position === <span class="number">0</span>) &#123;</span><br><span class="line">           	<span class="comment">//原表头的后一项将作为新的表头</span></span><br><span class="line">               head = currentNode.next;</span><br><span class="line">           &#125; <span class="keyword">else</span> <span class="keyword">if</span> (position === length - <span class="number">1</span>) &#123;</span><br><span class="line">               <span class="comment">//当删除的是表尾时</span></span><br><span class="line">               currentNode = tail;</span><br><span class="line">               <span class="comment">//原表尾的前一项作为新的表尾</span></span><br><span class="line">               tail = currentNode.pre;</span><br><span class="line">               tail.next = <span class="literal">null</span>;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="comment">//当删除的是中间某元素时，从表头开始迭代，找到position对应的元素</span></span><br><span class="line">               <span class="keyword">while</span> (index++ &lt; position) &#123;</span><br><span class="line">                   previousNode = currentNode;</span><br><span class="line">                   currentNode = currentNode.next;</span><br><span class="line">               &#125;</span><br><span class="line">               //删除currentNode，需要把currentNode的前一项和后一项链接起来</span><br><span class="line">               previousNode.next = currentNode.next;</span><br><span class="line">               //需要同时指定next和pre才算绑定完成</span><br><span class="line">               currentNode.next.pre = previousNode;</span><br><span class="line">           &#125;</span><br><span class="line">           //删除完成时链表长度减1</span><br><span class="line">           length--;</span><br><span class="line">           return currentNode;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>双向链表的特点和两个方法都已经介绍完毕。其他的方法实现思路类似，大家可以参照单链表和上面的代码试着实现。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/12/02/数据结构javascript描述：单链表/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cyp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浮生若梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/02/数据结构javascript描述：单链表/" itemprop="url">数据结构javascript描述：单链表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-02T22:54:00+08:00">
+                2017-12-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>要存储多个元素，我们通常会选择数组，通过[ ]很方便的访问元素。但是这种数据结构有个缺点：在大多数语言中，数组的大小是固定的，从数组的起点或中间插入或移除项的成本很高,因为需要移动其他项。对于这种需要多次进行插入或移除操作的场景，推荐使用链表这种数据结构。</p>
+<h3 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h3><p>  链表存储有序的元素集合，但不同于数组，链表中的元素在内存中并不是连续放置的。每个元素由一个存储元素本身的节点和一个指向下一个元素的引用组成。链表相对于数组的优势在于，插入或者移除元素时，只需要更改某一个项，不会对其他项产生影响。但是数组访问元素的方式更加便捷，直接使用[ ]，链表想要访问某一个元素时，需要从链表的第一个元素（表头）开始迭代直至找到需要的元素。在我们现实生活中，和链表比较相似的结构就是火车，火车由一节一节的车厢组成，每一个车厢之间都相互链接。如果想插入移除一节车厢时非常方便，只需要操作某一节车厢。<br>  链表分为两种：单链表和双链表。单链表是指，每一项都只包含对于下一项的引用。而双链表中，除了包含对下一项的引用，还包含对上一项的引用。这篇文章我们只讨论单链表。</p>
+<h3 id="创建链表"><a href="#创建链表" class="headerlink" title="创建链表"></a>创建链表</h3><p>  了解的链表的特性之后，我们开始实现动手这种数据结构。<br>  首先我们来实现链表的一项，它的特点是：有存储元素本身的节点和指向下一个元素的引用。</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Node</span>(<span class="params">element</span>)</span>&#123;</span><br><span class="line">      <span class="comment">//存储当前元素</span></span><br><span class="line">      <span class="keyword">this</span>.element = element;</span><br><span class="line">      <span class="comment">//存储对下一项的引用</span></span><br><span class="line">      <span class="keyword">this</span>.next=<span class="literal">null</span>;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p>  链表中通常需要包含两个属性：表头head和链表长度length，以及若干方法：</p>
+<ul>
+<li>append(element) 向链表的尾部添加一个元素</li>
+<li>removeAt(position) 从链表的指定位置移除一项</li>
+<li>insert(position,element) 向链表的指定位置插入一个元素</li>
+<li>toString() 输出链表中元素的值</li>
+<li>indexOf(element) 返回元素在链表中的索引，如果没有，则返回-1</li>
+<li>remove(element) 从链表中移除某一项</li>
+<li>isEmpty() 检测链表是不是空的，如果是，返回true，否则返回false</li>
+<li>size() 返回链表中元素的个数</li>
+<li>getHead() 返回链表的表头</li>
+</ul>
+<p>下面我们一个一个来实现这些方法。</p>
+<h4 id="append"><a href="#append" class="headerlink" title="append"></a>append</h4><p>  向链表的最后一项插入一个元素，那么首先应该找到链表的最后一项。寻找链表中某一项的方法是从表头开始，一直沿着next寻找下去。作为链表的最后一项，其next必定是null。所以我们只需要找到这一项，然后把它的next指向新增的元素即可。当然还有另外一种情况，当链表是空的时，往最后一项插入一个元素，相当于设置了链表的表头。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">LinkedList</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">//链表中一项的构造函数</span></span><br><span class="line">    <span class="keyword">let</span> Node = <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.element = element;</span><br><span class="line">        <span class="keyword">this</span>.next = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//初始化表头为null</span></span><br><span class="line">    <span class="keyword">let</span> head = <span class="literal">null</span>;</span><br><span class="line">    <span class="comment">//初始化链表长度为0</span></span><br><span class="line">    <span class="keyword">let</span> length = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">this</span>.append = <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">        <span class="comment">//首先创建一个新的元素</span></span><br><span class="line">        <span class="keyword">let</span> node = <span class="keyword">new</span> Node(element),</span><br><span class="line">            currentNode; <span class="comment">//当前项，用来迭代寻找元素</span></span><br><span class="line">        <span class="comment">//先判断链表是不是空的,即有没有表头</span></span><br><span class="line">        <span class="keyword">if</span> (head === <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="comment">//如果没有表头，将添加的新元素设置为表头</span></span><br><span class="line">            head = node;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//如果链表非空，需要找到最后一项</span></span><br><span class="line">            <span class="comment">//先把当前项设置为表头，准备迭代</span></span><br><span class="line">            currentNode = head;</span><br><span class="line">            <span class="comment">//只要当前项的next存在，就说明还有下一项</span></span><br><span class="line">            <span class="keyword">while</span> (currentNode.next) &#123;</span><br><span class="line">                <span class="comment">//把当前项变为下一项，继续寻找，直至没有下一项了</span></span><br><span class="line">                currentNode = currentNode.next;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">//循环结束时，currentNode.next已经没有了，说明此时currentNode就是最后一项</span></span><br><span class="line">            <span class="comment">//将新的元素添加到最后一项的后面，即将currentNode.next指向新元素</span></span><br><span class="line">            currentNode.next = node;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//添加完成后，记得更新链表长度</span></span><br><span class="line">        length++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面的代码有详细注释，说明了每一步的思路，大家可以对照查看，如果有问题，可以留言讨论。</p>
+<h4 id="removeAt"><a href="#removeAt" class="headerlink" title="removeAt"></a>removeAt</h4><p>从链表的指定位置移除元素。从链表中移除元素的思路很简单，大家可以类比火车拆除一节车厢。假设有A-&gt;B-&gt;C-&gt;D四节车厢，现在我想移除B车厢，首先需要断开B和A，C的链接装置，然后将A的连接装置链接到C。这时候火车就成了A-&gt;C-&gt;D,成功移除了B车厢。对应代码的思路为，首先找到指定位置对应的元素currentNode，得到它的上一项previousNode和下一项nextNode,然后将previousNode.next指向nextNode，这时候就相当于跳过了currentNode，把currentNode从链表中移除了。同样这里还有一种特殊情况，当position为0时，移除的元素是表头，没有上一项，这是我们只需要将表头head设置为下一项即可。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.removeAt = <span class="function"><span class="keyword">function</span> (<span class="params">position</span>) </span>&#123;</span><br><span class="line">       <span class="comment">//首先判断要移除的位置符不符合规定</span></span><br><span class="line">       <span class="keyword">if</span> (position &lt; <span class="number">0</span> || position &gt; length) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"索引超出范围"</span>);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="comment">//将当前元素初始化为表头，准备迭代</span></span><br><span class="line">           <span class="keyword">let</span> currentNode = head,</span><br><span class="line">               <span class="comment">//previousNode存储当前项的前一项，index存储当前项的索引</span></span><br><span class="line">               previousNode, index = <span class="number">0</span>;</span><br><span class="line">           <span class="comment">//判断是不是要移除表头</span></span><br><span class="line">           <span class="keyword">if</span> (position === <span class="number">0</span>) &#123;</span><br><span class="line">               <span class="comment">//将表头设置为原表头的下一项即可</span></span><br><span class="line">               head = currentNode.next;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="comment">//首先寻找到position对应的元素</span></span><br><span class="line">               <span class="comment">//随着index的增加，当前项和上一项随之改变，index是当前项的索引</span></span><br><span class="line">               <span class="keyword">while</span> (index++ &lt; position) &#123;</span><br><span class="line">                   previousNode = currentNode;</span><br><span class="line">                   currentNode = currentNode.next;</span><br><span class="line">               &#125;</span><br><span class="line">               //循环结束时，index应该等于position,currentNode就是postion所对应的元素</span><br><span class="line">               //移除currentNode，只需要把previousNode的next指向currentNode的下一项即可</span><br><span class="line">               previousNode.next = currentNode.next;</span><br><span class="line">           &#125;</span><br><span class="line">           //移除成功后，链表长度减1</span><br><span class="line">       	length--;</span><br><span class="line">           return currentNode.element;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>大家可以对照注释查看，思路不算复杂，应该很好理解。</p>
+<h4 id="insert"><a href="#insert" class="headerlink" title="insert"></a>insert</h4><p>向链表的指定位置插入一个元素。思路和removeAt一样，找到指定索引对应的元素currentNode和前一项previousNode。创建一个新元素node,然后将node添加到currentNode的前面，也就是把node.next指向currentNode，别忘了还要把前一项previousNode.next指向node。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.insert = <span class="function"><span class="keyword">function</span> (<span class="params">position, element</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (position &lt; <span class="number">-1</span> || position &gt; length) &#123;</span><br><span class="line">           <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">"索引超出范围"</span>);</span><br><span class="line">           <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="comment">//创建新的元素</span></span><br><span class="line">           <span class="keyword">let</span> node = <span class="keyword">new</span> Node(element);</span><br><span class="line">           <span class="comment">//将当前元素初始化为表头，准备迭代</span></span><br><span class="line">           <span class="keyword">let</span> currentNode = head,</span><br><span class="line">               <span class="comment">//previousNode存储当前项的前一项，index存储当前项的索引</span></span><br><span class="line">               previousNode, index = <span class="number">0</span>;</span><br><span class="line">           <span class="comment">//判断是不是要往表头前面添加元素</span></span><br><span class="line">           <span class="keyword">if</span> (position === <span class="number">0</span>) &#123;</span><br><span class="line">               <span class="comment">//将新元素的next指向原表头，同时新元素变为新的表头</span></span><br><span class="line">               node.next = currentNode;</span><br><span class="line">               head = node;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               <span class="comment">//首先寻找到position对应的元素</span></span><br><span class="line">               <span class="comment">//随着index的增加，当前项和上一项随之改变，index是当前项的索引</span></span><br><span class="line">               <span class="keyword">while</span> (index++ &lt; position) &#123;</span><br><span class="line">                   previousNode = currentNode;</span><br><span class="line">                   currentNode = currentNode.next;</span><br><span class="line">               &#125;</span><br><span class="line">               //循环结束时，index应该等于position,currentNode就是postion所对应的元素</span><br><span class="line">               //将新元素插入到previousNode和currentNode之间</span><br><span class="line">               previousNode.next = node;</span><br><span class="line">               node.next = currentNode;</span><br><span class="line">           &#125;</span><br><span class="line">           //插入成功后，链表长度加1</span><br><span class="line">           length++;</span><br><span class="line">           return true;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString"></a>toString</h4><p>将列表中的元素转化成字符串，只需要循环获取元素的element，然后使用字符串拼接起来<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.toString = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">let</span> currentNode = head,</span><br><span class="line">           str = <span class="string">''</span>;</span><br><span class="line">       <span class="keyword">while</span> (currentNode) &#123;</span><br><span class="line">           <span class="comment">//判断一下是否存在下一项，如果存在下一项，中间拼接逗号 ，否则不拼接</span></span><br><span class="line">           str += currentNode.element + (currentNode.next ? <span class="string">','</span> : <span class="string">''</span>);</span><br><span class="line">           currentNode = currentNode.next;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">return</span> str;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf"></a>indexOf</h4><p>寻找某一元素在链表中出现的位置，如果找不到这个元素，则返回-1。思路比较简单，只需要从表头开始迭代，一直到currentNode.next等于指定的元素，然后返回currentNode对应的索引。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.indexOf = <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">let</span> currentNode = head,</span><br><span class="line">           index = <span class="number">-1</span>;</span><br><span class="line">       <span class="comment">//一直循环至链表末尾</span></span><br><span class="line">       <span class="keyword">while</span> (currentNode) &#123;</span><br><span class="line">           <span class="comment">//链表中元素的值和指定的值相同时，返回对应的下标</span></span><br><span class="line">           <span class="keyword">if</span> (currentNode.element === element) &#123;</span><br><span class="line">               <span class="keyword">return</span> index;</span><br><span class="line">           &#125;</span><br><span class="line">           index++;</span><br><span class="line">           currentNode = currentNode.next;</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//如果在循环中一直没有返回结果，说明没有找到匹配的值，返回-1</span></span><br><span class="line">       <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="remove"><a href="#remove" class="headerlink" title="remove"></a>remove</h4><p>从链表中移除指定元素。可以借助前面实现的removeAt和indexof，找到指定元素在链表中的索引，然后根据索引使用removeAt来移除元素。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.remove = <span class="function"><span class="keyword">function</span> (<span class="params">element</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">let</span> index = <span class="keyword">this</span>.indexOf(element);</span><br><span class="line">       <span class="keyword">return</span> <span class="keyword">this</span>.removeAt(index);</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="isEmpty-size"><a href="#isEmpty-size" class="headerlink" title="isEmpty,size"></a>isEmpty,size</h4><p>这两个方法都可以根据链表的长度length判断。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.isEmpty = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> length === <span class="number">0</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">this</span>.size = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">return</span> length;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="getHead"><a href="#getHead" class="headerlink" title="getHead"></a>getHead</h4><p>返回链表的表头，我们在链表中声明了head，这就是我们需要的表头。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.getHead = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">   	<span class="keyword">return</span> head;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/25/数据结构javascript描述：队列/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cyp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浮生若梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/25/数据结构javascript描述：队列/" itemprop="url">数据结构javascript描述：队列</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-25T22:46:00+08:00">
+                2017-11-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>队列是一种遵循“先进先出”原则的有序集合。比如我们平时生活中排队买票，队头的人是第一个进入队伍的人，同时也是第一个买到票的人。</p>
+<h2 id="javascript实现"><a href="#javascript实现" class="headerlink" title="javascript实现"></a>javascript实现</h2><p>我们使用数组来模拟队列<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Queue</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> queue = [];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通常一个队列需要有以下方法：</p>
+<ul>
+<li>enqueue() 向队尾添加一个元素</li>
+<li>dequeue() 删除并返回队首元素</li>
+<li>front() 读取队首元素</li>
+<li>back() 读取队尾元素</li>
+<li>queueToString() 显示队列内的所有元素</li>
+<li>empty() 判断队列是否为空</li>
+<li>size()  获取队列的长度</li>
+</ul>
+<p>一个一个实现</p>
+<h4 id="enqueue"><a href="#enqueue" class="headerlink" title="enqueue"></a>enqueue</h4><p>向队尾添加元素，可以直接使用数组的push方法，每次添加的元素都在队尾，也就是数组的最后一位。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Queue</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> queue=[];</span><br><span class="line">    <span class="keyword">this</span>.enqueue=<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    	queue.push(value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="dequeue"><a href="#dequeue" class="headerlink" title="dequeue"></a>dequeue</h4><p>删除并返回队首的元素，也就是数组的第一个元素，可以直接使用数组中的shift方法来模拟实现。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Queue</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> queue=[];</span><br><span class="line">    <span class="keyword">this</span>.dequeue=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> queue.shift();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="front"><a href="#front" class="headerlink" title="front"></a>front</h4><p>获取队首的元素，也就是数组的第一个元素，可以使用数组下标直接获取，第一个元素的下标是0.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Queue</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> queue=[];</span><br><span class="line">    <span class="keyword">this</span>.front=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> queue[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="back"><a href="#back" class="headerlink" title="back"></a>back</h4><p>获取队尾的元素，也就是数组的最后一个元素，可以使用数组下标直接获取，最后一个元素的下标是数组长度减1.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Queue</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> queue=[];</span><br><span class="line">    <span class="keyword">this</span>.back=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> queue[queue.length<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="queueToString"><a href="#queueToString" class="headerlink" title="queueToString"></a>queueToString</h4><p>以字符串显示队列中所有内容,这个可以直接打印数组，字符串形式可以使用toString()方法来转化<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Queue</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> queue=[];</span><br><span class="line">    <span class="keyword">this</span>.queueToString=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="built_in">console</span>.log(queue.toString())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="empty"><a href="#empty" class="headerlink" title="empty"></a>empty</h4><p>检查队列是否为空，可以用判断数组的长度是否为0来模拟<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Queue</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> queue=[];</span><br><span class="line">    <span class="keyword">this</span>.empty=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> queue.length===<span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="empty-1"><a href="#empty-1" class="headerlink" title="empty"></a>empty</h4><p>获取队列的长度，可以使用数组的length属性<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Queue</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> queue=[];</span><br><span class="line">    <span class="keyword">this</span>.size=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> queue.length</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="测试一下"><a href="#测试一下" class="headerlink" title="测试一下"></a>测试一下</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> myqueue = <span class="keyword">new</span> Queue();</span><br><span class="line">   <span class="built_in">console</span>.log(myqueue.empty());  <span class="comment">//true</span></span><br><span class="line">   myqueue.enqueue(<span class="number">1</span>);  <span class="comment">//队尾添加一个元素</span></span><br><span class="line">   myqueue.enqueue(<span class="number">2</span>);</span><br><span class="line">   <span class="built_in">console</span>.log(myqueue.dequeue());   <span class="comment">//1,删除并返回队首的元素</span></span><br><span class="line">   myqueue.queueToString();  <span class="comment">//2， 以字符串的形式打印队列</span></span><br></pre></td></tr></table></figure>
+<h2 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h2><p>约瑟夫环问题：n个人围城一桌（首位相连），约定从1报数，报到数为k的人出局，然后下一位又从1开始报，以此类推。最后留下的人获胜。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Joseph</span>(<span class="params">nameList, num</span>) </span>&#123;</span><br><span class="line"> 		<span class="keyword">var</span> queue = <span class="keyword">new</span> Queue();</span><br><span class="line"> 		<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; nameList.length; i++) &#123;</span><br><span class="line">   		queue.enqueue(nameList[i]);</span><br><span class="line"> 		&#125;</span><br><span class="line"></span><br><span class="line"> 		<span class="keyword">var</span> eliminated = <span class="string">''</span>;</span><br><span class="line"></span><br><span class="line"> 		<span class="keyword">while</span> (queue.size() &gt; <span class="number">1</span>) &#123;</span><br><span class="line">   		<span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; num; i++) &#123;</span><br><span class="line">     			queue.enqueue(queue.dequeue());</span><br><span class="line">   		&#125;</span><br><span class="line"></span><br><span class="line">   		eliminated = queue.dequeue();</span><br><span class="line">   		<span class="built_in">console</span>.log(eliminated + <span class="string">" Get out!"</span>)</span><br><span class="line"> 		&#125;</span><br><span class="line"></span><br><span class="line"> 		<span class="keyword">return</span> queue.dequeue()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/18/数据结构javascript描述：栈/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cyp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浮生若梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/18/数据结构javascript描述：栈/" itemprop="url">数据结构javascript描述：栈</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-18T23:43:00+08:00">
+                2017-11-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>栈是一种遵循“后进先出”原则的有序集合。大家可以用羽毛球筒类比一下，假设一个羽毛球筒里按顺序放了5个羽毛球，编号为1，2，3，4，5,1号羽毛球在最底下，5号羽毛球在最上面，很明显1号球是最先放进筒中的。现在我想拿出4号球，那么我只能先拿出5号球，再才能够拿到4号球，这就所谓的后进先出。5号球是最后进入球筒里的，同样，也是最先被拿出来的。</p>
+<h2 id="javascript实现"><a href="#javascript实现" class="headerlink" title="javascript实现"></a>javascript实现</h2><p>我们使用数组来模拟栈<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Stack</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> stack=[];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>通常一个栈需要有以下方法：</p>
+<ul>
+<li>push(): 添加元素到栈顶</li>
+<li>pop(): 移除并返回栈顶元素</li>
+<li>peek(): 返回栈顶元素</li>
+<li>isEmpty: 检查栈是否为空，为空则返回true</li>
+<li>clear: 移除栈中所有元素</li>
+<li>size: 返回栈中元素个数。</li>
+<li>print: 以字符串显示栈中所有内容</li>
+</ul>
+<p>一个一个实现</p>
+<h4 id="push"><a href="#push" class="headerlink" title="push"></a>push</h4><p>向栈顶添加元素，可以直接使用数组的push方法，每次添加的元素都在栈顶，也就是数组的最后一位。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Stack</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> stack=[];</span><br><span class="line">    <span class="keyword">this</span>.push=<span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    	stack.push(value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="pop"><a href="#pop" class="headerlink" title="pop"></a>pop</h4><p>删除并返回栈顶的元素，也就是数组的最后一位元素，可以直接使用数组中的pop方法来模拟实现。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Stack</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> stack=[];</span><br><span class="line">    <span class="keyword">this</span>.pop=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> stack.pop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="peek"><a href="#peek" class="headerlink" title="peek"></a>peek</h4><p>返回栈顶的元素，也就是数组的最后一位元素，可以使用数组下标直接获取，最后一位元素的下标是数组长度减1.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Stack</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> stack=[];</span><br><span class="line">    <span class="keyword">this</span>.peek=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> stack[stack.length<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="isEmpty"><a href="#isEmpty" class="headerlink" title="isEmpty"></a>isEmpty</h4><p>检查栈是否为空，可以用判断数组的长度是否为0来模拟<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Stack</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> stack=[];</span><br><span class="line">    <span class="keyword">this</span>.isEmpty=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> stack.length===<span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="clear"><a href="#clear" class="headerlink" title="clear"></a>clear</h4><p>移除栈中的所有元素，模拟实现就是清空数组，可以直接将数组的长度赋值为0<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Stack</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> stack=[];</span><br><span class="line">    <span class="keyword">this</span>.clear=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	stack.length=<span class="number">0</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="size"><a href="#size" class="headerlink" title="size"></a>size</h4><p>返回栈中元素的个数，也就是数组长度，可以使用数组的length属性模拟<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Stack</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> stack=[];</span><br><span class="line">    <span class="keyword">this</span>.size=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="keyword">return</span> stack.length</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="print"><a href="#print" class="headerlink" title="print"></a>print</h4><p>以字符串显示栈中所有内容,这个可以直接打印数组，字符串形式可以使用toString()方法来转化<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Stack</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">var</span> stack=[];</span><br><span class="line">    <span class="keyword">this</span>.print=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    	<span class="built_in">console</span>.log(stack.toString())</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="测试一下"><a href="#测试一下" class="headerlink" title="测试一下"></a>测试一下</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mystack = <span class="keyword">new</span> Stack();</span><br><span class="line">   <span class="built_in">console</span>.log(mystack.isEmpty());  <span class="comment">//true</span></span><br><span class="line">   mystack.push(<span class="number">1</span>);  <span class="comment">//往栈中压入一个元素</span></span><br><span class="line">   mystack.push(<span class="number">2</span>);</span><br><span class="line">   <span class="built_in">console</span>.log(mystack.pop());   <span class="comment">//2,删除并返回栈中的最后一个元素</span></span><br><span class="line">   mystack.print();  <span class="comment">//1， 以字符串的形式打印栈</span></span><br></pre></td></tr></table></figure>
+<h2 id="实际应用"><a href="#实际应用" class="headerlink" title="实际应用"></a>实际应用</h2><p>判断一个数是不是回文数。<br><br>所谓回文数就是正着看和倒着看是一样的。我们使用上面模拟实现的栈来完成这个需求。<br><br>将该数字转化成字符串，然后一个一个的压入栈，假设原数字是1234，压入栈之后就是1234，然后一个一个的出栈(删除并返回最后一个元素)，拼接起来就是4321，在和1234比对，很明显不是一个回文数。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> mystack = <span class="keyword">new</span> Stack();</span><br><span class="line">   <span class="keyword">var</span> str = number.toString();  <span class="comment">//将数字转化成字符串</span></span><br><span class="line">   <span class="comment">//入栈</span></span><br><span class="line">   <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>,length=str.length;i&lt;length;i++)&#123;</span><br><span class="line">   	mystack.push(str[i]);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//出栈</span></span><br><span class="line">   <span class="keyword">var</span> newstr=<span class="string">""</span>;</span><br><span class="line">   <span class="keyword">while</span>(!mystack.isAmpty())&#123;</span><br><span class="line">   	newstr+=mystack.pop();</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">//比较两个字符串是否相等</span></span><br><span class="line">   <span class="keyword">if</span>(str === newstr)&#123;</span><br><span class="line">   	<span class="built_in">console</span>.log(<span class="string">"该数字是一个回文数"</span>)</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">else</span>&#123;</span><br><span class="line">   	<span class="built_in">console</span>.log(<span class="string">"该数字不是一个回文数"</span>);	</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/11/avascript再出发：模拟new的实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cyp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浮生若梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/11/avascript再出发：模拟new的实现/" itemprop="url">javascript再出发：模拟new的实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-11T00:48:00+08:00">
+                2017-11-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>在MDN中，new运算符的定义如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">new 运算符创建一个用户定义的对象类型的实例或具有构造函数的内置对象的实例。</span><br></pre></td></tr></table></figure></p>
+<p>从上面的定义中，我们很难看出一个函数在使用new运算符调用时究竟发生了什么。我们还是来看代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.name = name;</span><br><span class="line">       <span class="keyword">this</span>.age = age;</span><br><span class="line">   &#125;</span><br><span class="line">   Person.prototype.sex = <span class="string">"man"</span></span><br><span class="line">   <span class="keyword">var</span> zhangsan = <span class="keyword">new</span> Person(<span class="string">"zhangsan"</span>, <span class="number">18</span>);</span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.name);   <span class="comment">//zhangsan </span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.age);    <span class="comment">//18</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.sex);    <span class="comment">//man</span></span><br></pre></td></tr></table></figure></p>
+<p>了解过javascript继承的人都知道，在使用new调用的函数被成为构造函数，调用之后会产生一个新的对象，被成为实例对象。实例对象可以访问构造函数中的属性和原型对象中的属性。这里我们可以总结一下，使用new运算符调用函数的时候，会创建一个对象，然后把构造函数中的this指向这个新对象，把新对象和构造函数的prototype进行绑定，经过一系列处理之后，返回这个新对象。这是我们暂时的理解，再来看一段代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.name = name;</span><br><span class="line">       <span class="keyword">this</span>.age = age;</span><br><span class="line">       <span class="keyword">return</span> &#123;</span><br><span class="line">       	a: <span class="number">1</span>,</span><br><span class="line">           b: <span class="number">2</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   Person.prototype.sex = <span class="string">"man"</span></span><br><span class="line">   <span class="keyword">var</span> zhangsan = <span class="keyword">new</span> Person(<span class="string">"zhangsan"</span>, <span class="number">18</span>);</span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.name);   <span class="comment">//undefined</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.age);    <span class="comment">//undefined</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.sex);    <span class="comment">//undefined</span></span><br></pre></td></tr></table></figure></p>
+<p>从上面的代码我们可以看出，当构造函数有指定返回值的时候，这个新创建的对象好像“失效”了，返回的是这个指定的返回值。这时候“实例对象”不能再访问构造函数和原型对象中的属性了。<br>还没完，再看一段代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.name = name;</span><br><span class="line">       <span class="keyword">this</span>.age = age;</span><br><span class="line">       <span class="keyword">return</span> “ab”</span><br><span class="line">   &#125;</span><br><span class="line">   Person.prototype.sex = <span class="string">"man"</span></span><br><span class="line">   <span class="keyword">var</span> zhangsan = <span class="keyword">new</span> Person(<span class="string">"zhangsan"</span>, <span class="number">18</span>);</span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.name);   <span class="comment">//zhangsan</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.age);    <span class="comment">//18</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.sex);    <span class="comment">//name</span></span><br></pre></td></tr></table></figure></p>
+<p>通过上面的代码我们发现，当构造函数的指定返回值不是对象的时候，这个新创建的对象好像又“复活”了，具有了最开始时的特性。<br>那么这里我们来总结一下，当函数通过new运算符调用时，内部到底发生了什么</p>
+<ul>
+<li>创建了一个新对象</li>
+<li>构造函数中的this指向了这个对象</li>
+<li>这个对象和构造函数的prototype进行了绑定</li>
+<li>如果构造函数指定了对象类型的返回值，就不返回这个新创建的对象，返回指定的返回值</li>
+<li>如果构造函数没有指定返回值或者指定了非对象类型的返回值，就返回这个新创建的对象</li>
+</ul>
+<p>下面我们根据上面的总结，一步一步来模拟实现new</p>
+<h2 id="第一版"><a href="#第一版" class="headerlink" title="第一版"></a>第一版</h2><p>我们无法模拟运算符，这里我们通过工厂函数的方式来模拟new。传入构造函数作为参数，返回实例对象。来看代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myNew</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="comment">//传入的参数有多个，第一个参数是构造函数，后面的参数是传入构造函数的参数</span></span><br><span class="line">       <span class="comment">//这里使用shift来删除并获取arguments中的第一个值，也就是构造函数</span></span><br><span class="line">       <span class="keyword">var</span> <span class="keyword">constructor</span> = Array.prototype.shift.call(arguments);</span><br><span class="line">       //创建新的对象</span><br><span class="line">       var newObj = &#123;&#125;;</span><br><span class="line">       <span class="comment">//将构造函数中的this指定为newObj，使用apply模拟</span></span><br><span class="line">       <span class="comment">//这里注意，直接传入arguments，因为在上面已经使用shift删除了第一个参数</span></span><br><span class="line">       <span class="keyword">constructor</span>.apply(newObj, arguments);</span><br><span class="line">       //返回创建的对象</span><br><span class="line">       return newObj</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   function Person(name, age) &#123;</span><br><span class="line">       <span class="keyword">this</span>.name = name;</span><br><span class="line">       <span class="keyword">this</span>.age = age;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">var</span> zhangsan = myNew(<span class="string">"zhangsan"</span>, <span class="number">18</span>);</span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.name);  <span class="comment">//zhangsan</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.age);   <span class="comment">//18</span></span><br></pre></td></tr></table></figure></p>
+<p>上面的代码有详细的注释，大家可以仔细查看，帮助理解。最终打印的值也是我们期望的结果。这里我们已经实现了部分功能，创建了新对象，将构造函数中的this指定为这个新对象，返回新对象。下面我们实现剩下的部分，绑定原型对象，给构造函数指定不同类型的返回值。</p>
+<h2 id="第二版"><a href="#第二版" class="headerlink" title="第二版"></a>第二版</h2><p>将实例对象绑定原型对象我们可以使用 _ <em>proto</em> _ ,判断类型则使用 typeof .<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">myNew</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">       <span class="keyword">var</span> <span class="keyword">constructor</span> = Array.prototype.shift.call(arguments);</span><br><span class="line">       var newObj = &#123;&#125;;</span><br><span class="line">       <span class="keyword">constructor</span>.apply(newObj, arguments);</span><br><span class="line">       //绑定原型对象</span><br><span class="line">       newObj.__proto__ = <span class="keyword">constructor</span>.prototype;</span><br><span class="line">	//接收返回值</span><br><span class="line">       var result = <span class="keyword">constructor</span>.apply(newObj, arguments);</span><br><span class="line">	//根据返回值类型判断是返回newObj还是result</span><br><span class="line">       return typeof result === 'object' ? result : newObj</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>大家可以对照注释理解代码，如果有问题可以留言讨论。下面来测试一下<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.name = name;</span><br><span class="line">       <span class="keyword">this</span>.age = age;</span><br><span class="line">   &#125;</span><br><span class="line">   Person.prototype.sex = <span class="string">"man"</span></span><br><span class="line">   <span class="keyword">var</span> zhangsan = myNew(<span class="string">"zhangsan"</span>, <span class="number">18</span>);</span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.name);      <span class="comment">//zhangsan</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.age);       <span class="comment">//18</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.sex);       <span class="comment">//man</span></span><br></pre></td></tr></table></figure></p>
+<p>没有返回值的情况，通过验证！<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.name = name;</span><br><span class="line">       <span class="keyword">this</span>.age = age;</span><br><span class="line">       <span class="keyword">return</span> <span class="string">"ab"</span></span><br><span class="line">   &#125;</span><br><span class="line">   Person.prototype.sex = <span class="string">"man"</span></span><br><span class="line">   <span class="keyword">var</span> zhangsan = myNew(<span class="string">"zhangsan"</span>, <span class="number">18</span>);</span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.name);    <span class="comment">//zhangsan</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.age);	   <span class="comment">//18</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.sex);     <span class="comment">//man</span></span><br></pre></td></tr></table></figure></p>
+<p>有返回值，但是返回值为非对象类型的情况，通过验证！<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">       <span class="keyword">this</span>.name = name;</span><br><span class="line">       <span class="keyword">this</span>.age = age;</span><br><span class="line">       <span class="keyword">return</span> &#123;</span><br><span class="line">       	a: <span class="number">1</span>,</span><br><span class="line">           b: <span class="number">2</span></span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   Person.prototype.sex = <span class="string">"man"</span></span><br><span class="line">   <span class="keyword">var</span> zhangsan = myNew(<span class="string">"zhangsan"</span>, <span class="number">18</span>);</span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.name);       <span class="comment">//undefined</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.age);        <span class="comment">//undefined</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.sex);        <span class="comment">//undefined</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.a);          <span class="comment">//1</span></span><br><span class="line">   <span class="built_in">console</span>.log(zhangsan.b);          <span class="comment">//2</span></span><br></pre></td></tr></table></figure></p>
+<p>有返回值，且返回值为对象类型的情况，通过验证！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/05/javascript再出发：模拟bind的实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cyp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浮生若梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/11/05/javascript再出发：模拟bind的实现/" itemprop="url">javascript再出发：模拟bind的实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-05T23:47:00+08:00">
+                2017-11-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>bind方法的定义是：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bind()方法创建一个新的函数, 当被调用时，将其<span class="keyword">this</span>关键字设置为提供的值，</span><br><span class="line">在调用新函数时，在任何提供之前提供一个给定的参数序列。</span><br></pre></td></tr></table></figure></p>
+<p>简单来说，bind方法会给一个函数指定this，然后返回一个新的函数，这个函数和原函数在传递参数和返回值上没有区别。举个栗子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">var</span> obj = &#123;</span><br><span class="line">  	  a: <span class="number">2</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">  	   <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">      	   name: name,</span><br><span class="line">          age: age</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">  <span class="keyword">var</span> fun1 = fun.bind(obj);</span><br><span class="line">  <span class="keyword">var</span> result = fun1(<span class="string">"zhangsan"</span>,<span class="number">18</span>); <span class="comment">//打印2，返回&#123;name:"zhangsan",age:18&#125;</span></span><br><span class="line">  <span class="built_in">console</span>.log(result);  <span class="comment">//打印&#123;name:"zhangsan",age:18&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>总结一下：</p>
+<ul>
+<li>返回一个新的函数</li>
+<li>this指向bind的第一个参数</li>
+<li>新函数其他的参数照常传递</li>
+<li>新函数能有返回值</li>
+<li>下面我们就根据上面的特点，一步一步来模拟实现bind</li>
+</ul>
+<p>下面我们就根据上面的特点，一步一步来模拟实现bind。还是以上面的函数fun和对象obj为例：</p>
+<h2 id="第一版"><a href="#第一版" class="headerlink" title="第一版"></a>第一版</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.myBind=<span class="function"><span class="keyword">function</span>(<span class="params">context</span>)</span>&#123;</span><br><span class="line">   	<span class="comment">//首先获取函数fun,这里是this，也就是调用myBind的函数</span></span><br><span class="line">       <span class="keyword">var</span> self = <span class="keyword">this</span>;   <span class="comment">//先把this保存起来，防止改变</span></span><br><span class="line">       <span class="keyword">return</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       	self.apply(context);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>测试一下:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fun1 = fun.myBind(obj);</span><br><span class="line">fun1();   <span class="comment">//打印2</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="第二版"><a href="#第二版" class="headerlink" title="第二版"></a>第二版</h2><p>再来解决传参数和返回值的问题，参数是不固定的，但是我们有arguments对象，对  <figure class="highlight plain"><figcaption><span>对象不熟悉的可以另外查资料学习，这里就不展开啦，当然我后续会写关于arguments的文章。</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">```javascript</span><br><span class="line">	Function.prototype.myBind = function (context) &#123;</span><br><span class="line">        var self = this;</span><br><span class="line">        return function () &#123;</span><br><span class="line">           return self.apply(context, arguments)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>调用试试：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fun1 = fun.myBind(obj);</span><br><span class="line"><span class="keyword">var</span> result = fun1(<span class="string">"zhangsan"</span>,<span class="number">18</span>)  <span class="comment">//打印2，返回&#123;name:"zhangsan",age:18&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(result);  <span class="comment">//打印&#123;name:"zhangsan",age:18&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>到这里，我们已经实现了上面总结的四个特点，感觉已经可以收工了。但是bind函数还有几个特别不常用的用法，简直是令人发指。看代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">  <span class="keyword">var</span> obj = &#123;</span><br><span class="line">  	a: <span class="number">2</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">  	<span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">      	name: name,</span><br><span class="line">          age: age</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> fun1 = fun.bind(obj,<span class="string">"zhangsan"</span>);</span><br><span class="line">  <span class="keyword">var</span> result = fun1(<span class="number">18</span>); <span class="comment">//打印2，返回&#123;name:"zhangsan",age:18&#125;</span></span><br><span class="line">  <span class="built_in">console</span>.log(result);  <span class="comment">//打印&#123;name:"zhangsan",age:18&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>what？对，你没看错，函数在调用bind方法的时候，除了传一个参数指定this，还可以传另外的参数，而且这些参数还可以不传完，剩下的等到调用返回的新函数时再传。这就尴尬了，我们来分析一下，怎样可以把参数存起来。我们在第一二版代码中都是在调用myBind函数的时候返回了一个新的函数，而且这个新的函数还访问了myBind中的变量self，这是一个很明显的闭包。变量self并不会被垃圾回收，我们可以利用闭包的这个特性，再在myBind中声明一个变量保存调用myBind时传递的参数，然后等调用新函数时，把新传入的参数和这个暂存的参数合并。来看代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span> (<span class="params">context</span>) </span>&#123;</span><br><span class="line">      <span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">      <span class="comment">//第一个参数用来指定this，这里要获取的是除了第一个参数之外的所有参数,利用slice方法截取arguments对象，从第二个参数开始截取</span></span><br><span class="line">      <span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>,<span class="number">1</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">      	<span class="comment">//调用返回的方法时会传入新的参数，这时候需要把新传入的参数和上面的args合并，利用数组的concat方法,需要先把arguments对象转化成数组</span></span><br><span class="line">         <span class="keyword">var</span> newArgs=<span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>);</span><br><span class="line">         <span class="keyword">return</span> self.apply(context, newArgs.concat(args))</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure></p>
+<p>测试一下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fun1 = fun.myBind(obj,<span class="string">"zhangsan"</span>);</span><br><span class="line"><span class="keyword">var</span> result = fun1(<span class="number">18</span>); <span class="comment">//打印2，返回&#123;name:"zhangsan",age:18&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(result);  <span class="comment">//打印&#123;name:"zhangsan",age:18&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>搞定！上面我们在把arguments转化成数组时也可以使用ES6的…</p>
+<h2 id="当作构造函数使用"><a href="#当作构造函数使用" class="headerlink" title="当作构造函数使用"></a>当作构造函数使用</h2><p>大家以为这样就完了？太天真了，bind函数还有个不推荐的用法，虽然不推荐，但是还是可以用，来看代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">var</span> obj = &#123;</span><br><span class="line">       a: <span class="number">2</span></span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params">name, age</span>) </span>&#123;</span><br><span class="line">       <span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</span><br><span class="line">       <span class="built_in">console</span>.log(name);</span><br><span class="line">       <span class="built_in">console</span>.log(age);</span><br><span class="line">   &#125;</span><br><span class="line">   fun.prototype.a = <span class="number">3</span>;</span><br><span class="line">   <span class="keyword">var</span> fun1 = fun.bind(obj);</span><br><span class="line">   <span class="keyword">var</span> result = <span class="keyword">new</span> fun1(<span class="string">"zhangsan"</span>, <span class="number">18</span>);  <span class="comment">//打印3,zhangsan,18</span></span><br><span class="line">   <span class="built_in">console</span>.log(result)   <span class="comment">//打印&#123;&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>上面的代码，fun1是fun调用bind函数之后返回的新函数，这时候fun1中的this应该指向obj，但是我们把fun1当作构造函数调用。当函数被当作构造函数调用时，函数内部的this应该指向实例对象。这里同时有两个规则应用于this，一个是通过bind指定的obj，一个是通过构造函数调用指定的实例对象，那么最终this究竟指向什么，大家看结果最终打印的是3，很明显获胜的是后者。这时候通过bind指定的this被覆盖了，这种情况很少见，也不推荐使用，这里我们就不分析了，直接贴出代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">	<span class="built_in">Function</span>.prototype.myBind = <span class="function"><span class="keyword">function</span> (<span class="params">context</span>) </span>&#123;</span><br><span class="line">    	<span class="keyword">var</span> self = <span class="keyword">this</span>;</span><br><span class="line">    	<span class="keyword">var</span> args = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    	<span class="keyword">var</span> F = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        	<span class="keyword">var</span> newArgs = <span class="built_in">Array</span>.prototype.slice.call(<span class="built_in">arguments</span>);</span><br><span class="line">        	<span class="keyword">return</span> self.apply(<span class="keyword">this</span> <span class="keyword">instanceof</span> F ? <span class="keyword">this</span> : context, args.concat(newArgs));</span><br><span class="line">    &#125;</span><br><span class="line">    F.prototype = <span class="keyword">this</span>.prototype;</span><br><span class="line">    <span class="keyword">return</span> F;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/29/javascript再出发：模拟call和apply的实现/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cyp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浮生若梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/10/29/javascript再出发：模拟call和apply的实现/" itemprop="url">javascript再出发：模拟call和apply的实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-29T17:12:00+08:00">
+                2017-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>call方法是javascript中很常用的一个方法，其定义是：</p>
+<p><pre>call()方法调用一个函数，其具有一个指定的this值和分别地提供的参数</pre><br>简单来说，call方法可以在指定函数this的情况下调用这个函数，其余的参数和返回值部分不受影响。举个栗子：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>;</span><br><span class="line">   <span class="keyword">var</span> obj = &#123;</span><br><span class="line">   	a: <span class="number">2</span></span><br><span class="line">   &#125;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">fun</span>(<span class="params">name,age</span>)</span>&#123;</span><br><span class="line">   	<span class="built_in">console</span>.log(<span class="keyword">this</span>.a);</span><br><span class="line">       <span class="keyword">return</span> &#123;</span><br><span class="line">       	name: name,</span><br><span class="line">           age: age</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   fun(<span class="string">"zhangsan"</span>,<span class="number">18</span>);  <span class="comment">//打印1，返回&#123;name:"zhangsan",age:18&#125;</span></span><br><span class="line">   fun.call(obj,<span class="string">"zhangsan"</span>,<span class="number">18</span>); <span class="comment">//打印2，返回&#123;name:"zhangsan",age:18&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>总结一下：</p>
+<ul>
+<li>函数执行了</li>
+<li>this指向第一个参数</li>
+<li>其他的参数照常传递</li>
+<li>能有返回值</li>
+<li>补充一点，第一个参数为null时，this默认执行window</li>
+</ul>
+<p>下面我们就根据上面的特点，一步一步来模拟实现call  </p>
+<p>还是以上面的函数 <figure class="highlight plain"><figcaption><span>和对象 ```obj``` 为例</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">第一版</span><br><span class="line">---------------</span><br><span class="line">先来实现前两个功能，想指定函数的this，我们可以通过对象调用的方式，也就是```obj.fun()```,这时候fun中的this就指向obj了，我们来实现第一版代码：</span><br><span class="line">```javascript</span><br><span class="line">	Function.prototype.myCall=function(context)&#123;</span><br><span class="line">    	//首先获取函数fun，这里可以通过this来获取,obj也就是参数context啦</span><br><span class="line">        context.fn=this;</span><br><span class="line">        //将fn设为obj的一个方法</span><br><span class="line">        context.fn();</span><br><span class="line">        //莫名其妙给obj添加了一个方法总归是不好的，调用完成之后记得删掉这个方法</span><br><span class="line">        delete context.fn;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>想通过obj.fun()的方式调用，把fun设置为obj的一个方法就好啦，记得调用之后删除。下面我们来测试一下<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fun.myCall(context);  <span class="comment">//打印2</span></span><br></pre></td></tr></table></figure></p>
+<p>看到打印出2的时候还是很高兴的，终于走出第一步了，但是别高兴的太早了，下面还有好几步。</p>
+<h2 id="第二版"><a href="#第二版" class="headerlink" title="第二版"></a>第二版</h2><p>再来解决传参数和返回值的问题，参数是不固定的，但是我们有<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&gt; 对```arguments```对象不熟悉的可以另外查资料学习，这里就不展开啦，当然我后续会写关于arguments的文章。</span><br><span class="line"></span><br><span class="line">```javascript</span><br><span class="line">	Function.prototype.myCall=function(context)&#123;</span><br><span class="line">    	context.fn=this;</span><br><span class="line">        var args = [];  //用来存储参数</span><br><span class="line">        for(var i = 1,length = arguments.length;i &lt; length;i++)&#123;</span><br><span class="line">        	args.push(arguments[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        //注意arguments的第一个参数是指定this的对象，从第二个参数开始才是传给fun的函数，所以从1开始循环</span><br><span class="line">        var result = context.fn(...args); //接收返回值</span><br><span class="line">        delete context.fn;</span><br><span class="line">        return result;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>调用试试：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = fun.myCall(obj,<span class="string">"zhangsan"</span>,<span class="number">18</span>);  <span class="comment">//打印2</span></span><br><span class="line">   <span class="built_in">console</span>.log(result);  <span class="comment">//打印&#123;name:"zhangsan",age:18&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>又实现了，但是这里有个问题，在myCall中调用fn的时候，我们给函数穿参数的方式使用的是es6的展开运算符… ，这里考虑到兼容性，我们尽量使用老一点的方式，这里推荐使用eval函数，此时代码是这样的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.myCall=<span class="function"><span class="keyword">function</span>(<span class="params">context</span>)</span>&#123;</span><br><span class="line">   	context.fn=<span class="keyword">this</span>;</span><br><span class="line">       <span class="keyword">var</span> args = [];</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>,length = <span class="built_in">arguments</span>.length;i &lt; length;i++)&#123;</span><br><span class="line">       	args.push(<span class="string">'arguments['</span>+i+<span class="string">']'</span>);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">var</span> result = <span class="built_in">eval</span>(<span class="string">'context.fn('</span>+args+<span class="string">')'</span>);</span><br><span class="line">       <span class="keyword">delete</span> context.fn;</span><br><span class="line">       <span class="keyword">return</span> result;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>大家可以复制代码测试一下，关于eval，和arguments一样，大家可以先查阅资料学习一下，这里不展开，后续我会写关于它的文章。</p>
+<h2 id="最终版"><a href="#最终版" class="headerlink" title="最终版"></a>最终版</h2><p>还剩最后一个个功能，第一个参数为null时，this默认指向window，这个就很好实现啦，只需要判断一下context的值，为null时，让它默认为window，来看代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.myCall=<span class="function"><span class="keyword">function</span>(<span class="params">context</span>)</span>&#123;</span><br><span class="line">   	<span class="keyword">var</span> context = context || <span class="built_in">window</span>; </span><br><span class="line">   	context.fn = <span class="keyword">this</span>;</span><br><span class="line">       <span class="keyword">var</span> args = [];</span><br><span class="line">       <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>,length = <span class="built_in">arguments</span>.length;i &lt; length;i++)&#123;</span><br><span class="line">       	args.push(<span class="built_in">arguments</span>[i]);</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="keyword">var</span> result = context.fn(...args);</span><br><span class="line">       <span class="keyword">delete</span> context.fn;</span><br><span class="line">       <span class="keyword">return</span> result;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>调用一下：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> result = fun.myCall(context,<span class="string">"zhangsan"</span>,<span class="number">18</span>);  <span class="comment">//打印2</span></span><br><span class="line">   <span class="built_in">console</span>.log(result);  <span class="comment">//打印&#123;name:"zhangsan",age:18&#125;</span></span><br><span class="line">   </span><br><span class="line">   <span class="keyword">var</span> result = fun.myCall(<span class="literal">null</span>,<span class="string">"zhangsan"</span>,<span class="number">18</span>);  <span class="comment">//打印1</span></span><br><span class="line">   <span class="built_in">console</span>.log(result);  <span class="comment">//打印&#123;name:"zhangsan",age:18&#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>搞定！</p>
+<h2 id="apply"><a href="#apply" class="headerlink" title="apply"></a>apply</h2><p>apply和call功能一样，只是call传给函数的参数使用的是列表的形式，使用逗号隔开。而apply的第二个参数是参数数组，直接把参数放在数组里。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//call</span></span><br><span class="line">   fun.call(obj,arg1,arg2,arg3......)</span><br><span class="line">   <span class="comment">//apply</span></span><br><span class="line">   fun.apply(obj,[arg1,arg2,arg3......])</span><br></pre></td></tr></table></figure></p>
+<p>模拟实现apply的思路和call一样，这里就不再分析一遍了，大家可以仿照思路自己试试实现，我直接贴出代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">	<span class="built_in">Function</span>.prototype.apply = <span class="function"><span class="keyword">function</span> (<span class="params">context, arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> context = context || <span class="built_in">window</span>;</span><br><span class="line">    context.fn = <span class="keyword">this</span>;</span><br><span class="line">    <span class="keyword">var</span> args = [];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>, len = arr.length; i &lt; len; i++) &#123;</span><br><span class="line">       args.push(<span class="string">'arr['</span> + i + <span class="string">']'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">var</span> result = <span class="built_in">eval</span>(<span class="string">'context.fn('</span> + args + <span class="string">')'</span>)</span><br><span class="line">    <span class="keyword">delete</span> context.fn</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 
           
         
@@ -470,6 +1880,10 @@
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -513,14 +1927,32 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
-                  <span class="site-state-item-name">posts</span>
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -554,7 +1986,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -564,7 +1996,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
 
 
@@ -572,7 +2004,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
@@ -619,6 +2051,8 @@
   
 
 
+  
+
 
 
 
@@ -659,6 +2093,11 @@
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
 
   
 
@@ -671,13 +2110,6 @@
 
   
   
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
 
   
 

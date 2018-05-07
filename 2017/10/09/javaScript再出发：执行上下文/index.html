@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="javascript," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="先来看一段代码：12console.log(a);   //undefinedvar a=1; 对javascript有所了解的同学肯定听说过声明提升这个概念，在javascript代码正式执行之前会进行一些”准备工作“，这个准备工作会将变量和函数的声明部分提前到当前作用域的顶端，也就是说上面的代码执行时实际上是这样的：123var a;   console.log(a);   a=1; 今天我们">
+<meta name="keywords" content="javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javaScript再出发：执行上下文">
+<meta property="og:url" content="http://yoursite.com/2017/10/09/javaScript再出发：执行上下文/index.html">
+<meta property="og:site_name" content="浮生若梦">
+<meta property="og:description" content="先来看一段代码：12console.log(a);   //undefinedvar a=1; 对javascript有所了解的同学肯定听说过声明提升这个概念，在javascript代码正式执行之前会进行一些”准备工作“，这个准备工作会将变量和函数的声明部分提前到当前作用域的顶端，也就是说上面的代码执行时实际上是这样的：123var a;   console.log(a);   a=1; 今天我们">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/images/javascript-run-again3/1.png">
+<meta property="og:image" content="http://yoursite.com/images/javascript-run-again3/2.png">
+<meta property="og:image" content="http://yoursite.com/images/javascript-run-again3/1.png">
+<meta property="og:image" content="http://yoursite.com/images/javascript-run-again3/3.png">
+<meta property="og:image" content="http://yoursite.com/images/javascript-run-again3/1.png">
+<meta property="og:updated_time" content="2018-03-22T15:41:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="javaScript再出发：执行上下文">
+<meta name="twitter:description" content="先来看一段代码：12console.log(a);   //undefinedvar a=1; 对javascript有所了解的同学肯定听说过声明提升这个概念，在javascript代码正式执行之前会进行一些”准备工作“，这个准备工作会将变量和函数的声明部分提前到当前作用域的顶端，也就是说上面的代码执行时实际上是这样的：123var a;   console.log(a);   a=1; 今天我们">
+<meta name="twitter:image" content="http://yoursite.com/images/javascript-run-again3/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/10/09/javaScript再出发：执行上下文/"/>
+
+
+
+
+
+  <title>javaScript再出发：执行上下文 | 浮生若梦</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/chuxi1226"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_white_ffffff.png" alt="Fork me on GitHub"></a>
+  
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">浮生若梦</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">楚熙的个人博客</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-futbol-o"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/09/javaScript再出发：执行上下文/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cyp">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="浮生若梦">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">javaScript再出发：执行上下文</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-09T13:57:00+08:00">
+                2017-10-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/前端/" itemprop="url" rel="index">
+                    <span itemprop="name">前端</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>先来看一段代码：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(a);   <span class="comment">//undefined</span></span><br><span class="line"><span class="keyword">var</span> a=<span class="number">1</span>;</span><br></pre></td></tr></table></figure></p>
+<p>对javascript有所了解的同学肯定听说过声明提升这个概念，在javascript代码正式执行之前会进行一些”准备工作“，这个准备工作会将变量和函数的声明部分提前到当前作用域的顶端，也就是说上面的代码执行时实际上是这样的：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a;</span><br><span class="line">   <span class="built_in">console</span>.log(a);</span><br><span class="line">   a=<span class="number">1</span>;</span><br></pre></td></tr></table></figure></p>
+<p>今天我们要讨论的就是这个”准备工作”到底是什么，为什么会发生声明提升。<br></p>
+<h3 id="执行上下文"><a href="#执行上下文" class="headerlink" title="执行上下文"></a>执行上下文</h3><p>在javascript遇到可执行代码时，就会创建一个执行上下文，也就是上文中”准备工作”的专业说法。所谓的可执行代码，根据字面意思就是可以执行的代码，简单来说就三种：全局代码（全局环境下的代码），函数代码（函数体中的代码），eval代码（eval中的代码）。<br><br>对于执行上下文，有三个重要的属性：</p>
+<ul>
+<li>变量对象</li>
+<li>作用域链</li>
+<li>this</li>
+</ul>
+<p>在执行上下文的创建阶段，会创建变量对象，建立作用域链，以及确定this的指向。这三个概念我们后续会专门写三篇文章进行分析，今天我们只讨论执行上下文的执行流程</p>
+<h3 id="执行上下文栈"><a href="#执行上下文栈" class="headerlink" title="执行上下文栈"></a>执行上下文栈</h3><p>上看说到javascript每次遇到可执行代码都会创建一个执行上下文(Excution context stack)，那么随着函数的增多，这么多的执行上下文要怎么去管理。<br><br>浏览器中的javascript解释器是单线程的，同一时间只能做一件事，其他的事件和行为会以栈的形式进行排队，关于栈的结构，系列的<a href="http://jsliushen.com/%E5%89%8D%E7%AB%AF/javaScript%E5%86%8D%E5%87%BA%E5%8F%91-%E4%B8%80-%EF%BC%9A%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4/" target="_blank" rel="noopener">第一篇</a>已经介绍过了，不熟悉的同学可以回看复习。<br><br>当遇到可执行代码A时，当前代码的上下文ESC-A入栈，开始执行A中的代码，执行过程中遇到新的可执行代码B时，新的可执行代码的上下文ESC-B入栈，开始执行B中的代码，当B中的代码执行完毕时，ESC-B出栈，继续执行ESC-A中的代码。也就是说，永远只有栈顶的代码在执行，栈顶下面的代码处于等待状态。<br><br>我们使用数组模拟一下执行上下文栈的行为：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ECStack=[];</span><br></pre></td></tr></table></figure></p>
+<p>以一段代码为例，我们分析一下执行上下文栈的具体执行流程：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a=<span class="number">1</span>;</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">fun1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">   	<span class="keyword">var</span> b=<span class="number">2</span>;</span><br><span class="line">       <span class="function"><span class="keyword">function</span> <span class="title">fun2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">       	<span class="keyword">var</span> c=<span class="number">3</span>;</span><br><span class="line">           <span class="built_in">console</span>.log(b);</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   fun1()</span><br><span class="line">   <span class="function"><span class="keyword">function</span> <span class="title">fun4</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">      <span class="built_in">console</span>.log(a)</span><br><span class="line">   &#125;</span><br><span class="line">   fun4()</span><br></pre></td></tr></table></figure></p>
+<p>首先进入代码，遇到可执行代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>,这时所处的环境是全局上下文，全局上下文Global Context入栈：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ECStack.push(globalContext)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/javascript-run-again3/1.png" alt=""></p>
+<p>Global Context入栈之后执行全局代码，这时遇到可执行的函数fun1，函数fun1上下文fun1 Context入栈<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ECStack.push(fun1Context)</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/javascript-run-again3/2.png" alt=""></p>
+<p>fun1 Context入栈之后开始执行fun1函数体中的代码，这里有个问题，fun1中声明了一个函数fun2，但是并没有去执行fun2，所以这里并不会创建新的上下文。一直到fun1执行结束，此时fun1 Context出栈</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ECStack.pop(fun1Context)</span><br></pre></td></tr></table></figure>
+<p><img src="/images/javascript-run-again3/1.png" alt=""></p>
+<p>fun1 Context出栈之后，此时栈顶的是Global Context，继续执行全局代码，此时遇到可执行的函数fun4，函数fun4上下文fun4 Context入栈<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ECStack.push(fun4Context)</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/javascript-run-again3/3.png" alt=""></p>
+<p>fun4 Context入栈之后开始执行fun4函数体中的代码，执行完毕之后，fun4 Context出栈<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ECStack.pop(fun4Context)</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/javascript-run-again3/1.png" alt=""></p>
+<p>fun4 Context出栈之后，此时栈顶的是Global Context，继续执行全局代码，直到浏览器关闭<br><br>详细解释这个过程之后，我们就可以来对执行上下文做一个总结了</p>
+<ul>
+<li>遇到可执行代码时，就会创建一个可执行上下文，并将其压入可执行上下文栈</li>
+<li>只有栈顶的上下文处于执行状态，其他上下文等待</li>
+<li>同步执行，栈顶的上下文执行完毕之后，才执行下一个上下文</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/javascript/" rel="tag"># javascript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/07/使用github-hexo搭建自己的博客/" rel="next" title="使用github+hexo搭建自己的博客">
+                <i class="fa fa-chevron-left"></i> 使用github+hexo搭建自己的博客
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/15/javaScript再出发：变量对象/" rel="prev" title="javaScript再出发：变量对象">
+                javaScript再出发：变量对象 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cyp</p>
+              <p class="site-description motion-element" itemprop="description">记录关于自己的生活，工作，爱好</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#执行上下文"><span class="nav-number">1.</span> <span class="nav-text">执行上下文</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行上下文栈"><span class="nav-number">2.</span> <span class="nav-text">执行上下文栈</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cyp</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
